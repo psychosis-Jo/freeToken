@@ -1,0 +1,8 @@
+{
+  "llm": {
+    "provider": "stepfun",
+    "base_url": "https://api.stepfun.com/step_plan/v1",
+    "model": "step-router-v1",
+    "use_json_mode": false
+  }
+}

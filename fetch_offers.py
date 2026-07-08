@@ -4,10 +4,15 @@
 AI 福利追踪 · 抓取与抽取主程序
 ================================
 数据源：社区聚合仓库(markdown) + 官方免费额度页(html)
-抽取：OpenAI 兼容 LLM（默认 DeepSeek，无 key 时回退启发式）
+抽取：OpenAI 兼容 LLM（默认 StepFun step-router-v1，可在 config.json / Secrets 自行切换；无 key 时回退启发式）
 输出：offers.json（结构化数据） + index.html（自包含静态看板）
 推送：飞书群机器人 webhook（发现新增优惠时）
 
+LLM 配置（优先级：环境变量 > config.json > 内置预设）：
+    config.json 示例：
+      {"llm":{"provider":"stepfun","base_url":"https://api.stepfun.com/step_plan/v1","model":"step-router-v1","use_json_mode":false}}
+    环境变量：LLM_API_KEY(必填) / LLM_PROVIDER / LLM_BASE_URL / LLM_MODEL / LLM_USE_JSON_MODE
+    内置预设：stepfun、deepseek、qwen、siliconflow（改 provider 即切换）
 本地运行：
     pip install -r requirements.txt
     LLM_API_KEY=sk-xxx python fetch_offers.py        # 用 LLM 抽取
@@ -21,6 +26,45 @@ import sys
 import datetime
 import requests
 from bs4 import BeautifulSoup
+
+# ---------------------------------------------------------------------------
+# 0. LLM 配置（可自行切换厂商，优先级：环境变量 > config.json > 内置预设）
+# ---------------------------------------------------------------------------
+LLM_PRESETS = {
+    "stepfun":    {"base_url": "https://api.stepfun.com/step_plan/v1", "model": "step-router-v1", "use_json_mode": False},
+    "deepseek":   {"base_url": "https://api.deepseek.com",             "model": "deepseek-chat",  "use_json_mode": True},
+    "qwen":       {"base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1", "model": "qwen-plus", "use_json_mode": True},
+    "siliconflow":{"base_url": "https://api.siliconflow.cn/v1",        "model": "deepseek-ai/DeepSeek-V3", "use_json_mode": True},
+}
+
+
+def load_config() -> dict:
+    try:
+        with open("config.json", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+    except Exception as e:
+        print(f"[warn] 读取 config.json 失败: {e}", file=sys.stderr)
+        return {}
+
+
+def resolve_llm() -> dict:
+    """解析 LLM 配置，优先级：环境变量 > config.json > 内置预设(stepfun)。"""
+    cfg = load_config().get("llm", {})
+    provider = (os.environ.get("LLM_PROVIDER") or cfg.get("provider") or "stepfun").strip().lower()
+    preset = LLM_PRESETS.get(provider, {})
+    base_url = (os.environ.get("LLM_BASE_URL") or cfg.get("base_url") or preset.get("base_url")
+                or LLM_PRESETS["stepfun"]["base_url"])
+    model = (os.environ.get("LLM_MODEL") or cfg.get("model") or preset.get("model")
+             or LLM_PRESETS["stepfun"]["model"])
+    use_json = os.environ.get("LLM_USE_JSON_MODE")
+    if use_json is not None:
+        use_json_mode = use_json.strip().lower() in ("1", "true", "yes", "on")
+    else:
+        use_json_mode = bool(cfg.get("use_json_mode", preset.get("use_json_mode", False)))
+    return {"base_url": base_url, "model": model, "use_json_mode": use_json_mode}
+
 
 # ---------------------------------------------------------------------------
 # 1. 数据源配置（可自行增删）
@@ -82,6 +126,27 @@ def fetch_text(src: dict) -> str:
 # ---------------------------------------------------------------------------
 # 3. LLM 结构化抽取
 # ---------------------------------------------------------------------------
+def _parse_json_safely(content: str) -> dict:
+    """从模型输出里尽量抠出 JSON 对象（兼容 ```json 围栏 / 多余文字）。"""
+    if not content:
+        return {}
+    s = content.strip()
+    if s.startswith("```"):                      # 去 ```json ... ``` 围栏
+        s = re.sub(r"^```[a-zA-Z]*\n?", "", s)
+        s = re.sub(r"\n?```$", "", s).strip()
+    try:
+        return json.loads(s)
+    except Exception:
+        pass
+    a, b = s.find("{"), s.rfind("}")             # 退一步：截取第一个 { 到最后一个 }
+    if a != -1 and b != -1 and b > a:
+        try:
+            return json.loads(s[a:b + 1])
+        except Exception:
+            return {}
+    return {}
+
+
 def extract_with_llm(text: str, source_name: str) -> list:
     api_key = os.environ.get("LLM_API_KEY")
     if not api_key:
@@ -92,18 +157,16 @@ def extract_with_llm(text: str, source_name: str) -> list:
         print("[warn] 未安装 openai，跳过 LLM 抽取", file=sys.stderr)
         return []
 
-    client = OpenAI(
-        api_key=api_key,
-        base_url=os.environ.get("LLM_BASE_URL", "https://api.deepseek.com"),
-    )
-    model = os.environ.get("LLM_MODEL", "deepseek-chat")
+    conf = resolve_llm()
+    client = OpenAI(api_key=api_key, base_url=conf["base_url"])
+    model = conf["model"]
     prompt = f"""你是 AI 大模型优惠信息抽取器。从下方文本中抽取所有「AI 大模型 / API 的免费额度、折扣、试用、赠送 Token、限时活动」相关信息。
 只输出 JSON，格式：{{"offers":[...]}}，不要多余文字。每条字段：
 - vendor: 厂商/平台名（中文优先）
 - model: 模型名，无则写"通用"
 - offer_type: 从[免费token, 折扣, 试用, 永久免费, 新用户赠送]中选一
 - amount: 额度描述（如"500万 token"、"每日100次"），无则 ""
-- deadline: 截止日期(YYYY-MM-DD)或周期(如"每日"/"永久"/"限时")，无则 ""
+- deadline: 截止日期(YYYY-MM-DD)或周期(如"每日"/"永久"/"限时"），无则 ""
 - conditions: 领取条件（如"新用户"/"实名认证"），无则 ""
 - url: 来源链接，文本中有则用，否则 ""
 - summary: 一句话中文摘要（含厂商+模型+额度+条件）
@@ -113,13 +176,12 @@ def extract_with_llm(text: str, source_name: str) -> list:
 {text[:14000]}
 """
     try:
-        resp = client.chat.completions.create(
-            model=model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            response_format={"type": "json_object"},
-        )
-        data = json.loads(resp.choices[0].message.content)
+        kwargs = dict(model=model, messages=[{"role": "user", "content": prompt}], temperature=0)
+        # 部分模型(如 step-router-v1)不支持 json_object，按配置决定是否带
+        if conf["use_json_mode"]:
+            kwargs["response_format"] = {"type": "json_object"}
+        resp = client.chat.completions.create(**kwargs)
+        data = _parse_json_safely(resp.choices[0].message.content)
         arr = data.get("offers") or []
         for o in arr:
             o["source"] = source_name

@@ -26,10 +26,12 @@ jobs:
 
       - name: 抓取并生成看板
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}        # 可选：不填则用启发式兜底
-          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}      # 可选：默认 DeepSeek
-          LLM_MODEL: ${{ secrets.LLM_MODEL }}            # 可选：默认 deepseek-chat
-          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}  # 可选：填了才推飞书
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}              # 必填：LLM 抽取密钥（不填则启发式兜底）
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}            # 可选：stepfun/deepseek/qwen/siliconflow，默认 stepfun
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}            # 可选：自定义端点，覆盖预设
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}                  # 可选：自定义模型名，覆盖预设
+          LLM_USE_JSON_MODE: ${{ secrets.LLM_USE_JSON_MODE }}  # 可选：true/false
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}        # 可选：飞书群机器人 webhook，填了才推飞书
         run: python fetch_offers.py
 
       - name: 提交更新
