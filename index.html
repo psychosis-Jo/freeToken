@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 福利追踪 · 羊毛看板</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--line:#2a2f3a;--green:#3ddc84;--orange:#ff9d4d;--text:#e8eaed;--muted:#9aa0aa;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:24px 16px 60px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  h1{font-size:22px;font-weight:700;}
+  h1 .em{color:var(--green);}
+  .meta{color:var(--muted);font-size:13px;}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .filters select,.filters input{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;}
+  .filters input{flex:1;min-width:160px;}
+  .stat{color:var(--muted);font-size:13px;margin-bottom:14px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;transition:border-color .2s;}
+  .card:hover{border-color:var(--green);}
+  .card .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .tag{font-size:11px;padding:2px 9px;border-radius:20px;background:rgba(61,220,132,.12);color:var(--green);border:1px solid rgba(61,220,132,.3);}
+  .tag.orange{background:rgba(255,157,77,.12);color:var(--orange);border-color:rgba(255,157,77,.3);}
+  .vendor{font-weight:600;font-size:15px;}
+  .model{color:var(--muted);font-size:13px;}
+  .summary{font-size:14px;margin:4px 0 8px;}
+  .row{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);}
+  .row b{color:var(--text);font-weight:500;}
+  .src{margin-top:6px;font-size:12px;color:#6b7280;}
+  .src a{color:#5b8def;text-decoration:none;}
+  .empty{text-align:center;color:var(--muted);padding:40px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🐑 AI 福利追踪 · <span class="em">羊毛看板</span></h1>
+    <div class="meta">更新于 2026-07-09 02:08</div>
+  </header>
+  <div class="filters">
+    <input id="q" placeholder="搜索厂商 / 模型 / 关键词">
+    <select id="fType"><option value="">全部类型</option></select>
+    <select id="fVendor"><option value="">全部厂商</option></select>
+  </div>
+  <div class="stat" id="stat"></div>
+  <div id="list"></div>
+</div>
+<script>
+const OFFERS = [{"vendor": "示例 · 硅基流动", "model": "DeepSeek-V3", "offer_type": "永久免费", "amount": "2000 万 token / 天", "deadline": "永久", "conditions": "注册即享", "url": "https://siliconflow.cn", "summary": "硅基流动 DeepSeek-V3 注册即送每日 2000 万 token 永久免费额度", "source": "示例数据源"}];
+const listEl = document.getElementById('list');
+const qEl = document.getElementById('q');
+const fType = document.getElementById('fType');
+const fVendor = document.getElementById('fVendor');
+const stat = document.getElementById('stat');
+
+function uniq(arr){return [...new Set(arr)].filter(Boolean);}
+uniq(OFFERS.map(o=>o.offer_type)).forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;fType.appendChild(o);});
+uniq(OFFERS.map(o=>o.vendor)).forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;fVendor.appendChild(o);});
+
+function render(){
+  const q=qEl.value.trim().toLowerCase();
+  const t=fType.value, v=fVendor.value;
+  const filtered=OFFERS.filter(o=>
+    (!q || (o.vendor+o.model+o.summary+o.amount).toLowerCase().includes(q)) &&
+    (!t || o.offer_type===t) &&
+    (!v || o.vendor===v)
+  );
+  stat.textContent=`共 ${OFFERS.length} 条，当前显示 ${filtered.length} 条`;
+  if(!filtered.length){listEl.innerHTML='<div class="empty">没有匹配的优惠 🤔</div>';return;}
+  listEl.innerHTML=filtered.map(o=>{
+    const typeCls=o.offer_type==='折扣'?'tag orange':'tag';
+    const dl=o.deadline?`<span><b>截止</b> ${o.deadline}</span>`:'';
+    const amt=o.amount?`<span><b>额度</b> ${o.amount}</span>`:'';
+    const cond=o.conditions?`<span><b>条件</b> ${o.conditions}</span>`:'';
+    const url=o.url?` · <a href="${o.url}" target="_blank" rel="noopener">来源</a>`:'';
+    return `<div class="card">
+      <div class="top"><span class="${typeCls}">${o.offer_type}</span>
+        <span class="vendor">${o.vendor||'—'}</span>
+        <span class="model">${o.model||''}</span></div>
+      <div class="summary">${o.summary||''}</div>
+      <div class="row">${amt}${dl}${cond}</div>
+      <div class="src">📡 ${o.source||''}${url}</div>
+    </div>`;
+  }).join('');
+}
+[qEl,fType,fVendor].forEach(el=>el.addEventListener('input',render));
+render();
+</script>
+</body>
+</html>

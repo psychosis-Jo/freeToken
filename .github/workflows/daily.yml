@@ -1,0 +1,41 @@
+name: 每日抓取 AI 福利
+
+on:
+  schedule:
+    # 每天 UTC 1:00 ≈ 北京 09:00；想换时间改这里（分 时 日 月 周）
+    - cron: '0 1 * * *'
+  workflow_dispatch: {}   # 允许在 Actions 页面手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 抓取并生成看板
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}        # 可选：不填则用启发式兜底
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}      # 可选：默认 DeepSeek
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}            # 可选：默认 deepseek-chat
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}  # 可选：填了才推飞书
+        run: python fetch_offers.py
+
+      - name: 提交更新
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add offers.json index.html
+          git commit -m "chore: 更新优惠数据 $(date +%F)" || echo "无变化"
+          git push
