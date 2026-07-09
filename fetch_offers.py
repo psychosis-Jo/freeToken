@@ -170,6 +170,7 @@ def extract_with_llm(text: str, source_name: str) -> list:
 - conditions: 领取条件（如"新用户"/"实名认证"），无则 ""
 - url: 来源链接，文本中有则用，否则 ""
 - summary: 一句话中文摘要（含厂商+模型+额度+条件）
+- region: 从[国内, 国外]选一。"国内"=服务/注册/访问通常无需翻墙（中国厂商及面向中国用户的平台，如硅基流动、阿里云、智谱、百度、腾讯、字节、月之暗面、MiniMax、讯飞、DeepSeek 等）；"国外"=主要面向海外、国内访问通常需翻墙（如 OpenAI、Anthropic、Google、HuggingFace、Together、Groq、Mistral、AI21 等）
 文本来源：{source_name}
 
 文本：
@@ -231,8 +232,37 @@ def extract_heuristic(text: str, source_name: str) -> list:
 # ---------------------------------------------------------------------------
 # 5. 归一化 / 去重 / 新增检测
 # ---------------------------------------------------------------------------
+CN_HINTS = ["360", "智脑", "智谱", "glm", "阿里", "通义", "qwen", "百度", "文心", "ernie",
+            "腾讯", "混元", "hunyuan", "字节", "豆包", "doubao", "月之暗面", "kimi", "moonshot",
+            "minimax", "abab", "讯飞", "星火", "spark", "百川", "baichuan", "昆仑", "天工", "零一",
+            "yi", "deepseek", "阶跃", "step", "火山", "方舟", "硅基", "siliconflow", "美团",
+            "longcat", "钉钉", "商汤", "sense", "百炼", "modelscope", "魔搭", "华为", "盘古", "星辰"]
+CN_DOMAINS = ["siliconflow.cn", "bigmodel.cn", "aliyun", "volcengine", "modelscope", "bce.baidu",
+              "tencent", "moonshot", "minimax", "zhipu", "baichuan", "deepseek", "stepfun", "360",
+              "xverse", "01.ai", "metax", "aibase", "iqiyi", "kunlun", "baidu", "qq.com"]
+
+
+def infer_region(vendor: str, summary: str, url: str) -> str:
+    """无 LLM 或 LLM 未判 region 时的兜底：启发式判断国内/国外。"""
+    text = f"{vendor} {summary} {url}".lower()
+    u = (url or "").lower()
+    if ".cn" in u or any(h in u for h in CN_DOMAINS):
+        return "国内"
+    if any(h in text for h in ["openai", "anthropic", "claude", "google", "gemini", "huggingface",
+                               "together", "groq", "mistral", "ai21", "cohere", "replicate",
+                               "perplexity", "meta llama", "llama", "xai", "nvidia", "fireworks",
+                               "octoai", "anyscale", "deepinfra", "openrouter", "vertex", "bedrock",
+                               "azure", "ollama"]):
+        return "国外"
+    if re.search(r"[一-鿿]", vendor or ""):
+        return "国内"
+    if any(h.lower() in text for h in CN_HINTS):
+        return "国内"
+    return "国外"
+
+
 def norm(o: dict) -> dict:
-    return {
+    d = {
         "vendor": (o.get("vendor") or "").strip(),
         "model": (o.get("model") or "通用").strip(),
         "offer_type": (o.get("offer_type") or "其他").strip(),
@@ -242,7 +272,11 @@ def norm(o: dict) -> dict:
         "url": (o.get("url") or "").strip(),
         "summary": (o.get("summary") or "").strip(),
         "source": (o.get("source") or "").strip(),
+        "region": (o.get("region") or "").strip(),
     }
+    if not d["region"]:
+        d["region"] = infer_region(d["vendor"], d["summary"], d["url"])
+    return d
 
 
 def sig(o: dict) -> str:
@@ -309,6 +343,10 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
   .filters select,.filters input{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;}
   .filters input{flex:1;min-width:160px;}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:center;}
+  .seg button{background:var(--card);color:var(--muted);border:none;padding:7px 13px;font-size:13px;cursor:pointer;border-right:1px solid var(--line);}
+  .seg button:last-child{border-right:none;}
+  .seg button.active{background:var(--green);color:#06210f;font-weight:600;}
   .stat{color:var(--muted);font-size:13px;margin-bottom:14px;}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;transition:border-color .2s;}
   .card:hover{border-color:var(--green);}
@@ -335,6 +373,11 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
     <input id="q" placeholder="搜索厂商 / 模型 / 关键词">
     <select id="fType"><option value="">全部类型</option></select>
     <select id="fVendor"><option value="">全部厂商</option></select>
+    <div class="seg" id="fRegion">
+      <button data-v="" class="active">全部</button>
+      <button data-v="国内">国内·免翻墙</button>
+      <button data-v="国外">国外·需翻墙</button>
+    </div>
   </div>
   <div class="stat" id="stat"></div>
   <div id="list"></div>
@@ -346,6 +389,14 @@ const qEl = document.getElementById('q');
 const fType = document.getElementById('fType');
 const fVendor = document.getElementById('fVendor');
 const stat = document.getElementById('stat');
+const fRegion = document.getElementById('fRegion');
+let regionVal = "";
+fRegion.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  fRegion.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  regionVal = b.dataset.v;
+  render();
+}));
 
 function uniq(arr){return [...new Set(arr)].filter(Boolean);}
 uniq(OFFERS.map(o=>o.offer_type)).forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;fType.appendChild(o);});
@@ -357,9 +408,11 @@ function render(){
   const filtered=OFFERS.filter(o=>
     (!q || (o.vendor+o.model+o.summary+o.amount).toLowerCase().includes(q)) &&
     (!t || o.offer_type===t) &&
-    (!v || o.vendor===v)
+    (!v || o.vendor===v) &&
+    (!regionVal || o.region===regionVal)
   );
-  stat.textContent=`共 ${OFFERS.length} 条，当前显示 ${filtered.length} 条`;
+  const cn=OFFERS.filter(o=>o.region==='国内').length, foreign=OFFERS.filter(o=>o.region==='国外').length;
+  stat.textContent=`共 ${OFFERS.length} 条（国内 ${cn} · 国外 ${foreign}），当前显示 ${filtered.length} 条`;
   if(!filtered.length){listEl.innerHTML='<div class="empty">没有匹配的优惠 🤔</div>';return;}
   listEl.innerHTML=filtered.map(o=>{
     const typeCls=o.offer_type==='折扣'?'tag orange':'tag';
@@ -367,8 +420,11 @@ function render(){
     const amt=o.amount?`<span><b>额度</b> ${o.amount}</span>`:'';
     const cond=o.conditions?`<span><b>条件</b> ${o.conditions}</span>`:'';
     const url=o.url?` · <a href="${o.url}" target="_blank" rel="noopener">来源</a>`:'';
+    const regionCls=o.region==='国外'?'tag orange':'tag';
+    const regionText=o.region||'未知';
     return `<div class="card">
       <div class="top"><span class="${typeCls}">${o.offer_type}</span>
+        <span class="${regionCls}">${regionText}</span>
         <span class="vendor">${o.vendor||'—'}</span>
         <span class="model">${o.model||''}</span></div>
       <div class="summary">${o.summary||''}</div>

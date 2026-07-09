@@ -8,7 +8,8 @@
     "conditions": "实名认证",
     "url": "https://ai.360.com/open",
     "summary": "360智脑提供新人Token赠送体验包，有效期依活动而定",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "AI21",
@@ -19,7 +20,8 @@
     "conditions": "",
     "url": "https://studio.ai21.com/",
     "summary": "AI21提供$10试用额度，有效期3个月，适用于Jamba系列模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "AI21 Labs",
@@ -30,7 +32,8 @@
     "conditions": "账号注册",
     "url": "https://studio.ai21.com/",
     "summary": "AI21 Labs新用户送$10免费试用额度，有效期3个月",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "AWS",
@@ -41,7 +44,8 @@
     "conditions": "注册新AWS账号并绑定信用卡，在控制台手动申请模型调用权限",
     "url": "https://aws.amazon.com/bedrock/",
     "summary": "AWS Bedrock新用户送$200免费额度，有效期6个月，可用于Bedrock模型推理",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "AWS",
@@ -52,7 +56,8 @@
     "conditions": "AWS Activate创业计划",
     "url": "https://aws.amazon.com/bedrock/",
     "summary": "AWS Activate创业计划提供$1,000至$100,000不等额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "AWS",
@@ -63,7 +68,8 @@
     "conditions": "AWS Educate计划",
     "url": "https://aws.amazon.com/bedrock/",
     "summary": "AWS Educate计划为学生提供专属免费额度与培训",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Anthropic",
@@ -74,7 +80,8 @@
     "conditions": "开源项目维护者",
     "url": "https://console.anthropic.com/",
     "summary": "Anthropic开源资助计划为开源项目维护者最高可申请6个月Claude Max价值约$1,200",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Anthropic",
@@ -85,7 +92,8 @@
     "conditions": "需完成手机号验证",
     "url": "https://console.anthropic.com/",
     "summary": "Anthropic新用户送$5免费测试额度，有效期30天",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Anthropic",
@@ -96,7 +104,8 @@
     "conditions": "创业资助计划",
     "url": "https://console.anthropic.com/",
     "summary": "Anthropic创业资助计划最高可获$25,000额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Anyscale",
@@ -107,7 +116,8 @@
     "conditions": "新用户注册，需绑定支付方式激活",
     "url": "https://anyscale.com/",
     "summary": "Anyscale新用户注册送$100额度，试用期内有效，需绑定支付方式激活",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "BaseTen",
@@ -118,7 +128,8 @@
     "conditions": "注册账号并创建Workspace",
     "url": "https://baseten.co/",
     "summary": "BaseTen注册并创建Workspace送$30免费额度，有效期未明确",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "BaseTen",
@@ -129,7 +140,8 @@
     "conditions": "创业扶持计划，符合条件的初创公司",
     "url": "https://baseten.co/",
     "summary": "BaseTen创业扶持计划为符合条件的初创公司最高可申请$25,000额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Baseten",
@@ -140,7 +152,8 @@
     "conditions": "",
     "url": "https://app.baseten.co/",
     "summary": "Baseten提供$30试用额度，可用于任何支持的模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "BentoCloud",
@@ -151,7 +164,8 @@
     "conditions": "注册账号",
     "url": "https://bentoml.com/cloud",
     "summary": "BentoCloud注册赠送$10免费额度，有效期未明确",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -162,7 +176,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供Llama 3.1 8B免费API，限14,400次请求/天、100万tokens/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -173,7 +188,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供Llama 3.3 70B免费API，限14,400次请求/天、100万tokens/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -184,7 +200,8 @@
     "conditions": "注册账号（无需信用卡绑定）",
     "url": "https://inference.cerebras.ai/",
     "summary": "Cerebras每天提供100万Tokens免费额度，永久每日重置，无需信用卡绑定",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -195,7 +212,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供Qwen 3 235B A22B Instruct免费API，限14,400次请求/天、100万tokens/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -206,7 +224,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供Qwen 3 32B免费API，限14,400次请求/天、100万tokens/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -217,7 +236,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供Z.ai GLM-4.6免费API，限100次请求/天、10万tokens/小时。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cerebras",
@@ -228,7 +248,8 @@
     "conditions": "",
     "url": "https://cloud.cerebras.ai/",
     "summary": "Cerebras提供gpt-oss-120b免费API，限14,400次请求/天、100万tokens/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cloudflare",
@@ -239,7 +260,8 @@
     "conditions": "",
     "url": "https://developers.cloudflare.com/workers-ai",
     "summary": "Cloudflare Workers AI每天提供10,000神经元免费额度，支持多种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Cohere",
@@ -250,7 +272,8 @@
     "conditions": "注册账号，无需绑定信用卡",
     "url": "https://dashboard.cohere.com/",
     "summary": "Cohere提供每月1000次免费调用额度，永久每月重置，无需绑定信用卡",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Cohere",
@@ -261,7 +284,8 @@
     "conditions": "",
     "url": "https://cohere.com",
     "summary": "Cohere提供多款模型免费API，限20次请求/分钟、1000次请求/月。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "DMXAPI",
@@ -272,7 +296,8 @@
     "conditions": "免费注册",
     "url": "https://www.dmxapi.cn/",
     "summary": "DMXAPI注册赠送约$1初始测试金，用完即止",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "DeepSeek",
@@ -283,7 +308,8 @@
     "conditions": "邮箱注册",
     "url": "https://platform.deepseek.com/",
     "summary": "DeepSeek新用户赠送500万Tokens价值10元，有效期30天，2026年7月起全面切至V4版本",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "DigitalOcean",
@@ -294,7 +320,8 @@
     "conditions": "绑定GitHub Student Developer Pack",
     "url": "https://www.digitalocean.com/",
     "summary": "DigitalOcean学生通过GitHub Student Developer Pack可获得$200免费额度，有效期1年",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "DigitalOcean",
@@ -305,7 +332,8 @@
     "conditions": "创业扶持计划，符合条件的初创企业",
     "url": "https://www.digitalocean.com/",
     "summary": "DigitalOcean创业扶持计划为符合条件的初创企业提供$5,000至$100,000额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Fireworks",
@@ -316,7 +344,8 @@
     "conditions": "",
     "url": "https://fireworks.ai/",
     "summary": "Fireworks提供$1试用额度，可用于各种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "GitHub",
@@ -327,7 +356,8 @@
     "conditions": "",
     "url": "https://github.com/marketplace/models",
     "summary": "GitHub Models提供多款大模型免费原型测试，额度取决于Copilot订阅层级。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google",
@@ -338,7 +368,8 @@
     "conditions": "需Google账号（不可开启Google Cloud Billing）",
     "url": "https://aistudio.google.com/",
     "summary": "Google AI Studio提供Gemini API永久免费调用（以Flash系列为主），需Google账号",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -349,7 +380,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemini 2.5 Flash免费API，限250,000 tokens/分钟、20次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -360,7 +392,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemini 2.5 Flash-Lite免费API，限250,000 tokens/分钟、20次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -371,7 +404,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemini 3 Flash免费API，限250,000 tokens/分钟、20次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -382,7 +416,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemini 3.1 Flash-Lite免费API，限250,000 tokens/分钟、500次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -393,7 +428,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemma 3 12B Instruct免费API，限15,000 tokens/分钟、14,400次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -404,7 +440,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemma 3 1B Instruct免费API，限15,000 tokens/分钟、14,400次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -415,7 +452,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemma 3 27B Instruct免费API，限15,000 tokens/分钟、14,400次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google AI Studio",
@@ -426,7 +464,8 @@
     "conditions": "在英国/瑞士/欧洲经济区/欧盟之外使用时数据会用于训练",
     "url": "https://aistudio.google.com",
     "summary": "Google AI Studio提供Gemma 3 4B Instruct免费API，限15,000 tokens/分钟、14,400次请求/天，非欧洲地区数据可能用于训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google Cloud",
@@ -437,7 +476,8 @@
     "conditions": "付款验证严格",
     "url": "https://console.cloud.google.com/vertex-ai/model-garden",
     "summary": "Google Cloud Vertex AI预览期间免费提供Llama 3.1 70B Instruct，限60次请求/分钟。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google Cloud",
@@ -448,7 +488,8 @@
     "conditions": "付款验证严格",
     "url": "https://console.cloud.google.com/vertex-ai/model-garden",
     "summary": "Google Cloud Vertex AI预览期间免费提供Llama 3.1 8B Instruct，限60次请求/分钟。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Google Cloud",
@@ -459,7 +500,8 @@
     "conditions": "付款验证严格",
     "url": "https://console.cloud.google.com/vertex-ai/model-garden",
     "summary": "Google Cloud Vertex AI预览期间免费提供Llama 3.2 90B Vision Instruct，限30次请求/分钟。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Groq",
@@ -470,7 +512,8 @@
     "conditions": "注册账号（无需信用卡绑定）",
     "url": "https://groq.com/",
     "summary": "Groq提供永久免费API额度，支持Llama 3、Mixtral等模型，无需信用卡绑定",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Groq",
@@ -481,7 +524,8 @@
     "conditions": "",
     "url": "https://console.groq.com",
     "summary": "Groq提供多款大模型免费API，不同模型有不同每日请求数和tokens/分钟限制。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "HuggingFace",
@@ -492,7 +536,8 @@
     "conditions": "",
     "url": "https://huggingface.co/docs/inference-providers/en/index",
     "summary": "HuggingFace推理提供商每月提供$0.10免费额度，支持多种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Hyperbolic",
@@ -503,7 +548,8 @@
     "conditions": "",
     "url": "https://app.hyperbolic.xyz/",
     "summary": "Hyperbolic提供$1试用额度，支持DeepSeek、Llama、Qwen等多款模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "InceptionLabs",
@@ -514,7 +560,8 @@
     "conditions": "注册账号，无需绑定信用卡",
     "url": "https://inceptionlabs.ai/",
     "summary": "InceptionLabs提供1000万Tokens免费计划，注册即可使用无需绑卡",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Inference.net",
@@ -525,7 +572,8 @@
     "conditions": "注册/回复邮件调查",
     "url": "https://inference.net",
     "summary": "Inference.net提供$1注册额度，回复邮件调查可额外获得$25，可用于各种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Inference.net",
@@ -536,7 +584,8 @@
     "conditions": "注册账号",
     "url": "https://inference.net/",
     "summary": "Inference.net提供$1每月重置免费额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Jina AI",
@@ -547,7 +596,8 @@
     "conditions": "生成API Key即可（无需注册与绑卡）",
     "url": "https://jina.ai/",
     "summary": "Jina AI提供1000万Tokens免费额度，长期有效，生成API Key即可使用",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "MiniMax",
@@ -558,7 +608,8 @@
     "conditions": "账号注册，需绑定手机并完成个人或企业实名认证",
     "url": "https://platform.minimax.io/",
     "summary": "MiniMax注册实名认证赠送Token代金券，有效期90天",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "MiniMax",
@@ -569,7 +620,8 @@
     "conditions": "邀请好友订阅Token Plan",
     "url": "https://platform.minimax.io/",
     "summary": "MiniMax Builder共建者计划邀请好友订阅Token Plan，受邀好友享首单9折优惠",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "Mistral",
@@ -580,7 +632,8 @@
     "conditions": "需要手机号验证",
     "url": "https://codestral.mistral.ai/",
     "summary": "Mistral Codestral目前免费使用，限30次请求/分钟、2000次请求/天，需手机号验证。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Mistral",
@@ -591,7 +644,8 @@
     "conditions": "需要手机号验证，免费层级需同意数据训练",
     "url": "https://console.mistral.ai/",
     "summary": "Mistral La Plateforme免费层级提供多种模型，月额度10亿token，需手机号验证并同意数据训练。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Mistral AI",
@@ -602,7 +656,8 @@
     "conditions": "手机验证",
     "url": "https://console.mistral.ai/",
     "summary": "Mistral AI提供Experiment Plan永久免费套餐，需手机验证，有严格并发和RPS限制",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Modal",
@@ -613,7 +668,8 @@
     "conditions": "注册/添加付款方式",
     "url": "https://modal.com",
     "summary": "Modal注册即送$5/月，添加付款方式后提升至$30/月，可用于任何支持的模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Modal",
@@ -624,7 +680,8 @@
     "conditions": "注册账号（无需绑定信用卡）",
     "url": "https://modal.com/",
     "summary": "Modal每月赠送$30计算额度，长期有效每月重置，无需绑定信用卡",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "NCompass",
@@ -635,7 +692,8 @@
     "conditions": "注册账号",
     "url": "https://ncompass.tech/",
     "summary": "NCompass注册赠送$100免费额度，有效期未明确",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "NLP Cloud",
@@ -646,7 +704,8 @@
     "conditions": "手机号验证",
     "url": "https://nlpcloud.com/home",
     "summary": "NLP Cloud提供$15试用额度，需手机号验证，可用于各种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "NVIDIA",
@@ -657,7 +716,8 @@
     "conditions": "注册NVIDIA开发者计划账号",
     "url": "https://build.nvidia.com/",
     "summary": "NVIDIA NIM注册赠送1000免费推理积分最多可申请至5000，永久有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "NVIDIA NIM",
@@ -668,7 +728,8 @@
     "conditions": "需要手机号验证",
     "url": "https://build.nvidia.com/explore/discover",
     "summary": "NVIDIA NIM提供多种开源模型免费API，限40次请求/分钟，需手机号验证。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Nebius",
@@ -679,7 +740,8 @@
     "conditions": "",
     "url": "https://studio.nebius.com/",
     "summary": "Nebius提供$1试用额度，可用于各种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Novita",
@@ -690,7 +752,8 @@
     "conditions": "",
     "url": "https://novita.ai/?ref=ytblmjc&utm_source=affiliate",
     "summary": "Novita提供$0.5试用额度，有效期1年，可用于各种开源模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "OpenRouter",
@@ -701,7 +764,8 @@
     "conditions": "注册账号（无需绑定信用卡）",
     "url": "https://openrouter.ai/",
     "summary": "OpenRouter提供25+款模型永久免费访问，注册即可使用",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "OpenRouter",
@@ -712,7 +776,8 @@
     "conditions": "",
     "url": "https://openrouter.ai",
     "summary": "OpenRouter提供多款大模型免费API调用，免费层级限50次请求/天、20次请求/分钟，充值$10后提升至1000次/天。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "PPIO",
@@ -723,7 +788,8 @@
     "conditions": "邀请码注册",
     "url": "https://pp.io/",
     "summary": "PPIO派欧云邀请码注册赠送50元代金券约5000万Tokens，限时有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "SambaNova Cloud",
@@ -734,7 +800,8 @@
     "conditions": "",
     "url": "https://cloud.sambanova.ai/",
     "summary": "SambaNova Cloud提供$5试用额度，有效期3个月，支持Llama、Qwen、DeepSeek等模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "StreamLake",
@@ -745,7 +812,8 @@
     "conditions": "注册账号",
     "url": "https://www.streamlake.com/",
     "summary": "StreamLake Pro版新用户赠送2000万Tokens",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "StreamLake",
@@ -756,7 +824,8 @@
     "conditions": "注册账号",
     "url": "https://www.streamlake.com/",
     "summary": "StreamLake KAT-Coder-Air V1模型永久免费",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国外"
   },
   {
     "vendor": "Upstage",
@@ -767,7 +836,8 @@
     "conditions": "",
     "url": "https://console.upstage.ai/",
     "summary": "Upstage提供$10试用额度，有效期3个月，适用于Solar Pro/Mini模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "Vercel",
@@ -778,7 +848,8 @@
     "conditions": "",
     "url": "https://vercel.com/docs/ai-gateway",
     "summary": "Vercel AI Gateway每月提供$5免费额度，可路由至多种模型提供商。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国外"
   },
   {
     "vendor": "中国电信",
@@ -789,7 +860,8 @@
     "conditions": "实名认证，开通天翼云账号与息壤推理服务",
     "url": "https://www.ctyun.cn/",
     "summary": "中国电信天翼AI提供2500万Tokens免费试用体验包，有效期1-3个月",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "中国移动",
@@ -800,7 +872,8 @@
     "conditions": "账号注册认证",
     "url": "https://e.10086.cn/",
     "summary": "中国移动MoMA提供新人测试额度，有效期以最新活动为准",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "云知声",
@@ -811,7 +884,8 @@
     "conditions": "实名认证",
     "url": "https://ai.unisound.com/",
     "summary": "云知声山海提供新用户资源包/免费体验，有效期依资源包限定时长",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "商汤",
@@ -822,7 +896,8 @@
     "conditions": "注册商汤开放平台",
     "url": "https://signin.sensecore.cn/",
     "summary": "商汤大装置Token Plan公测Lite版本提供1500次/5h调用额度，限时有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "商汤",
@@ -833,7 +908,8 @@
     "conditions": "注册商汤开放平台",
     "url": "https://signin.sensecore.cn/",
     "summary": "商汤大装置Token Plan公测V4 Flash版本提供150次/5h调用额度，限时有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "数眼智能",
@@ -844,7 +920,8 @@
     "conditions": "账号注册",
     "url": "https://shuyanai.com/",
     "summary": "数眼智能提供500次免费模型调用额度，长期有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "昆仑万维",
@@ -855,7 +932,8 @@
     "conditions": "注册登录",
     "url": "https://model-platform.tiangong.cn/",
     "summary": "昆仑万维提供新人测试体验额度，有效期依活动而定",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "智谱AI",
@@ -866,7 +944,8 @@
     "conditions": "注册并完成实名认证",
     "url": "https://www.bigmodel.cn/",
     "summary": "智谱AI GLM-4-Flash等特定模型可免费调用",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "智谱AI",
@@ -877,7 +956,8 @@
     "conditions": "注册并完成实名认证",
     "url": "https://www.bigmodel.cn/",
     "summary": "智谱AI注册实名认证送2000万Tokens体验包，通常有效期1个月",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "火山引擎",
@@ -888,7 +968,8 @@
     "conditions": "每成功邀请1名好友完成Coding Plan首单支付",
     "url": "https://www.volcengine.com/product/ark",
     "summary": "火山方舟Coding Plan邀请有礼，好友首单享9折或9.5折优惠",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "火山引擎",
@@ -899,7 +980,8 @@
     "conditions": "注册火山引擎账号并完成实名认证",
     "url": "https://www.volcengine.com/product/ark",
     "summary": "火山方舟每个大模型提供50万Tokens永久免费推理额度，支持安心体验模式防扣费",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "火山引擎",
@@ -910,7 +992,8 @@
     "conditions": "高校师生专属计划，完成认证",
     "url": "https://www.volcengine.com/product/ark",
     "summary": "火山引擎高校师生专属计划完成认证后每人最高可申请1亿Tokens免费额度",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "白山云",
@@ -921,7 +1004,8 @@
     "conditions": "注册账号且必须完成实名认证",
     "url": "https://ai.baishan.com/",
     "summary": "白山云注册实名认证得150元体验金，首次调用再得300元，总计最高450元",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "百度智能云",
@@ -932,7 +1016,8 @@
     "conditions": "注册并实名认证",
     "url": "https://cloud.baidu.com/product/wenxinworkshop",
     "summary": "百度智能云千帆每个模型独立领取100万Tokens免费额度，通常有效期3个月",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "硅基流动",
@@ -943,7 +1028,8 @@
     "conditions": "注册并实名认证",
     "url": "https://cloud.siliconflow.cn/i/A6Lc7N2E/",
     "summary": "硅基流动部分小模型如Qwen/GLM小参数版0元永久免费",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "硅基流动",
@@ -954,7 +1040,8 @@
     "conditions": "手机号注册并完成实名认证",
     "url": "https://cloud.siliconflow.cn/i/A6Lc7N2E/",
     "summary": "硅基流动注册实名认证即送约14元/2000万Tokens通用代金券，永久有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "硅基流动",
@@ -965,7 +1052,8 @@
     "conditions": "成功邀请1位好友完成实名注册，双方均可获赠，奖励可无限叠加",
     "url": "https://cloud.siliconflow.cn/i/A6Lc7N2E/",
     "summary": "硅基流动推荐官计划邀请好友实名注册双方各获约14元代金券，长期有效可叠加",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "科大讯飞",
@@ -976,7 +1064,8 @@
     "conditions": "手机号注册并完成实名认证",
     "url": "https://xinghuo.xfyun.cn/",
     "summary": "科大讯飞星火Lite API永久免费，存在1-3低QPS限制",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "科大讯飞",
@@ -987,7 +1076,8 @@
     "conditions": "手机号注册并完成实名认证",
     "url": "https://xinghuo.xfyun.cn/",
     "summary": "科大讯飞星火进阶版本赠送测试Tokens",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "美团",
@@ -998,7 +1088,8 @@
     "conditions": "注册账号",
     "url": "https://longcat.chat/platform/",
     "summary": "美团LongCat每日提供5500万Tokens免费额度，长期有效每日自动刷新，限时公测中",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "腾讯云",
@@ -1009,7 +1100,8 @@
     "conditions": "必须完成实名认证",
     "url": "https://console.cloud.tencent.com/tokenhub",
     "summary": "腾讯云混元首次开通发放一次性免费体验资源包，有效期1年",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "阿里云",
@@ -1020,7 +1112,8 @@
     "conditions": "注册阿里云账号并开通实名认证",
     "url": "https://bailian.console.aliyun.com/",
     "summary": "阿里云百炼每个模型赠送100万Tokens及720小时知识库，模型额度90天有效",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "阿里云",
@@ -1031,7 +1124,8 @@
     "conditions": "",
     "url": "https://bailian.console.alibabacloud.com/",
     "summary": "阿里云国际模型工作室为每个模型赠送100万tokens，适用于各种Qwen模型。",
-    "source": "free-llm-api-cn（社区聚合·中文）"
+    "source": "free-llm-api-cn（社区聚合·中文）",
+    "region": "国内"
   },
   {
     "vendor": "阿里云",
@@ -1042,7 +1136,8 @@
     "conditions": "注册成为阿里云云大使获取专属链接，推荐新用户购买大模型资源包",
     "url": "https://bailian.console.aliyun.com/",
     "summary": "阿里云云大使推广计划推广者可获最高30%-45%现金返利，受邀新用户可获9折优惠券",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   },
   {
     "vendor": "零一万物",
@@ -1053,6 +1148,7 @@
     "conditions": "账号注册",
     "url": "https://platform.lingyiwanwu.com/",
     "summary": "零一万物注册赠送体验金，通常有效期1个月",
-    "source": "FreeLLM-API-KeyHub（社区聚合）"
+    "source": "FreeLLM-API-KeyHub（社区聚合）",
+    "region": "国内"
   }
 ]
