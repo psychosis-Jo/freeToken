@@ -62,7 +62,7 @@
       </div>
       <div class="msg" id="gate-msg" role="status"></div>
     </form>
-    <p>用你自己的 Personal Access Token。经典令牌勾选 <b style="color:var(--text)">repo</b>。细粒度令牌只授权 <b style="color:var(--text)">psychosis-Jo/freeToken</b>，权限选 Contents 读写、Secrets 读写。令牌只留在这个标签页，关掉就没了。</p>
+    <p>用你自己的 Personal Access Token。细粒度令牌只授权 <b style="color:var(--text)">psychosis-Jo/freeToken</b>。在 Repository permissions 里，Contents 和 Secrets 都要选 Read and write。Secrets 和 Actions 是两项，只开 Actions 不够。令牌只留在这个标签页，关掉就没了。</p>
     <p><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">创建细粒度令牌</a> · <a href="index.html">回看板</a></p>
   </section>
 
@@ -166,7 +166,14 @@ async function gh(path, options){
     let message = (body && body.message) || ("GitHub " + res.status);
     if (res.status === 401) message = "令牌无效，GitHub 没有接受。";
     if (res.status === 403 && /Resource not accessible by personal access token/i.test(String(message))) {
-      message = "这把令牌没有访问这项内容的权限。";
+      const accepted = res.headers.get("x-accepted-github-permissions") || "";
+      if (/secrets/i.test(accepted)) {
+        message = "这把令牌没有 Secrets 权限。打开令牌，在 Repository permissions 里把 Secrets 改成 Read and write。不要改 Actions，那是另一项。保存后仍用原来的令牌进入。";
+      } else if (accepted) {
+        message = "这把令牌缺少权限：" + accepted + "。请在令牌的 Repository permissions 里打开对应项。";
+      } else {
+        message = "这把令牌没有访问这项内容的权限。请确认 Repository permissions 里的 Secrets 是 Read and write。";
+      }
     }
     const err = new Error(message);
     err.status = res.status;
