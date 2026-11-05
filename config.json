@@ -1,11 +1,39 @@
 {
   "llm": {
     "provider": "stepfun",
+    "models": {
+      "stepfun": {
+        "model": "step-router-v1",
+        "base_url": "https://api.stepfun.com/step_plan/v1",
+        "use_json_mode": false
+      },
+      "deepseek": {
+        "model": "deepseek-flash",
+        "base_url": "https://api.deepseek.com",
+        "use_json_mode": true
+      },
+      "qwen": {
+        "model": "qwen-plus",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "use_json_mode": true
+      },
+      "siliconflow": {
+        "model": "deepseek-ai/DeepSeek-V3",
+        "base_url": "https://api.siliconflow.cn/v1",
+        "use_json_mode": true
+      },
+      "custom": {
+        "model": "",
+        "base_url": "",
+        "use_json_mode": false,
+        "label": "自定义"
+      }
+    },
     "custom": {
-      "label": "自定义",
-      "base_url": "",
       "model": "",
-      "use_json_mode": false
+      "base_url": "",
+      "use_json_mode": false,
+      "label": "自定义"
     }
   },
   "dashboard_url": "",

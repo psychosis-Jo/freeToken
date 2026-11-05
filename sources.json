@@ -89,15 +89,6 @@
     "promo_only": true
   },
   {
-    "name": "商汤动态",
-    "type": "rss",
-    "url": "https://free-llm-intel.aishort.top/feeds/llm-news-sensetime_sensenova.xml",
-    "enabled": true,
-    "vendor": "商汤",
-    "limit": 8,
-    "promo_only": true
-  },
-  {
     "name": "StreamLake 动态",
     "type": "rss",
     "url": "https://free-llm-intel.aishort.top/feeds/llm-news-streamlake.xml",
