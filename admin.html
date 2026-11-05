@@ -165,6 +165,9 @@ async function gh(path, options){
   if (!res.ok) {
     let message = (body && body.message) || ("GitHub " + res.status);
     if (res.status === 401) message = "令牌无效，GitHub 没有接受。";
+    if (res.status === 403 && /Resource not accessible by personal access token/i.test(String(message))) {
+      message = "这把令牌没有访问这项内容的权限。";
+    }
     const err = new Error(message);
     err.status = res.status;
     throw err;
@@ -271,13 +274,29 @@ async function refreshSecrets(){
   const listed = await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets?per_page=100");
   state.secretNames = new Set((listed.secrets || []).map(s => s.name));
 }
+async function identify(){
+  try {
+    const user = await gh("/user");
+    if (!user || user.login !== OWNER) {
+      throw new Error("这个令牌属于 " + ((user && user.login) || "未知账号") + "，后台只接受 " + OWNER + "。");
+    }
+    return user.login;
+  } catch (e) {
+    if (e.status !== 403) throw e;
+    try {
+      await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets?per_page=1");
+    } catch (inner) {
+      if (inner.status === 403 || inner.status === 404) {
+        throw new Error("这把令牌读不到本仓库的 Secrets。请确认仓库只选了 " + OWNER + "/" + REPO + "，并且 Contents 和 Secrets 都是 Read and write。");
+      }
+      throw inner;
+    }
+    return OWNER;
+  }
+}
 async function enter(nextToken){
   token = nextToken;
-  const user = await gh("/user");
-  if (!user || user.login !== OWNER) {
-    token = "";
-    throw new Error("这个令牌属于 " + ((user && user.login) || "未知账号") + "，后台只接受 " + OWNER + "。");
-  }
+  const login = await identify();
   const config = await readRepoJson("config.json") || {};
   let sources = null;
   try { sources = await readRepoJson("sources.json"); } catch (e) { if (e.status !== 404) throw e; }
@@ -321,7 +340,7 @@ async function enter(nextToken){
   if (PRESETS.every(p => p.id !== state.provider)) state.provider = "custom";
   await refreshSecrets();
   sessionStorage.setItem(TOKEN_KEY, token);
-  document.getElementById("who").textContent = user.login;
+  document.getElementById("who").textContent = login;
   gate.hidden = true;
   app.hidden = false;
   paint();
