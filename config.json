@@ -1,8 +1,13 @@
 {
   "llm": {
     "provider": "stepfun",
-    "base_url": "https://api.stepfun.com/step_plan/v1",
-    "model": "step-router-v1",
-    "use_json_mode": false
-  }
+    "custom": {
+      "label": "自定义",
+      "base_url": "",
+      "model": "",
+      "use_json_mode": false
+    }
+  },
+  "dashboard_url": "",
+  "retain_days": 21
 }

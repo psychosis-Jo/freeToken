@@ -4,14 +4,31 @@ on:
   schedule:
     # 每天 UTC 1:00 ≈ 北京 09:00；想换时间改这里（分 时 日 月 周）
     - cron: '0 1 * * *'
-  workflow_dispatch: {}   # 允许在 Actions 页面手动触发
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: 本次抽取用哪家。config 表示沿用仓库 config.json 的 llm.provider
+        type: choice
+        default: config
+        options:
+          - config
+          - stepfun
+          - deepseek
+          - qwen
+          - siliconflow
+          - custom
 
 permissions:
   contents: write
 
+concurrency:
+  group: daily-offers
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,13 +43,23 @@ jobs:
 
       - name: 抓取并生成看板
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}              # 必填：LLM 抽取密钥（不填则启发式兜底）
-          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}            # 可选：stepfun/deepseek/qwen/siliconflow，默认 stepfun
-          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}            # 可选：自定义端点，覆盖预设
-          LLM_MODEL: ${{ secrets.LLM_MODEL }}                  # 可选：自定义模型名，覆盖预设
-          LLM_USE_JSON_MODE: ${{ secrets.LLM_USE_JSON_MODE }}  # 可选：true/false
+          CHOSEN_PROVIDER: ${{ github.event.inputs.provider }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}              # 通用备用密钥。已填厂商专用密钥时不会用到
+          STEPFUN_API_KEY: ${{ secrets.STEPFUN_API_KEY }}      # 阶跃星辰
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}    # DeepSeek
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}            # 通义千问 DashScope
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}  # 硅基流动
+          CUSTOM_API_KEY: ${{ secrets.CUSTOM_API_KEY }}        # provider=custom 时使用
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}            # 可选：临时覆盖该厂商的地址
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}                  # 可选：临时覆盖该厂商的模型名
+          LLM_USE_JSON_MODE: ${{ secrets.LLM_USE_JSON_MODE }}  # 可选：true/false；留空则用该厂商预设
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}        # 可选：飞书群机器人 webhook，填了才推飞书
-        run: python fetch_offers.py
+          DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}          # 可选：看板地址，写入飞书消息
+        run: |
+          if [ -n "$CHOSEN_PROVIDER" ] && [ "$CHOSEN_PROVIDER" != "config" ]; then
+            export LLM_PROVIDER="$CHOSEN_PROVIDER"
+          fi
+          python fetch_offers.py
 
       - name: 提交更新
         run: |

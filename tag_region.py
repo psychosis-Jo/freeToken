@@ -20,7 +20,7 @@ KEY = os.environ.get("LLM_API_KEY")
 if not KEY:
     print("[warn] 未设置 LLM_API_KEY，将全部用启发式兜底标注")
 
-offers = json.load(open("offers.json", encoding="utf-8"))
+offers = json.load(open(f.OFFERS_FILE, encoding="utf-8"))
 todo = [i for i, o in enumerate(offers) if not o.get("region")]
 print(f"需标注 {len(todo)} 条（共 {len(offers)} 条）")
 
@@ -68,7 +68,8 @@ for start in range(0, len(todo), BATCH):
                 offers[i].get("vendor", ""), offers[i].get("summary", ""), offers[i].get("url", ""))
     print(f"  已处理 {min(start + BATCH, len(todo))}/{len(todo)}")
 
-json.dump(offers, open("offers.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-f.build_site(offers, "index.html")
-print("region 分布:", dict(Counter(o.get("region", "") for o in offers)))
+offers = f.collapse([f.norm(o) for o in offers])
+saved = f.save_offers(offers)
+f.build_site(saved, f.SITE_FILE)
+print("region 分布:", dict(Counter(o.get("region", "") for o in saved)))
 print("[ok] 已写回 offers.json 并重建 index.html")
