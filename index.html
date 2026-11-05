@@ -12,6 +12,8 @@
   header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
   h1{font-size:22px;font-weight:700;}
   h1 .em{color:var(--green);}
+  .manage{margin-left:auto;color:var(--muted);font-size:13px;text-decoration:none;}
+  .manage:hover{color:var(--green);}
   .meta{color:var(--muted);font-size:13px;flex:1 1 100%;}
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
   .filters select,.filters input{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;}
@@ -44,7 +46,8 @@
 <div class="wrap">
   <header>
     <h1>🐑 AI 福利追踪 · <span class="em">羊毛看板</span></h1>
-    <div class="meta">更新于 2026-11-05 18:30（北京时间） · 抽取 阶跃星辰 StepFun · step-router-v1</div>
+    <a class="manage" href="admin.html">管理</a>
+    <div class="meta">更新于 2026-11-05 19:43（北京时间） · 抽取 阶跃星辰 StepFun · step-router-v1</div>
   </header>
   <div class="filters">
     <input id="q" placeholder="搜索厂商 / 模型 / 条件 / 关键词">

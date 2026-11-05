@@ -48,8 +48,17 @@ python fetch_offers.py --rebuild                       # 只归一化现有数�
 
 ## 自定义
 
+### 管理后台
+看板右上角的「管理」打开 `admin.html`。这个地址是公开的，打开后只有一个令牌输入框。校验通过的条件是：令牌属于 GitHub 账号 `psychosis-Jo`，并且能改这个仓库。
+
+API key 在浏览器里用仓库公钥加密，写入 GitHub Actions Secrets。网页、`config.json`、`sources.json` 里都不会出现钥匙原文。GitHub 也不允许再把钥匙读出来，所以后台只能显示「已配置」或「未配置」。令牌只放在当前浏览器标签里，关掉标签就没有了。
+
+换厂商时填写那一家自己的钥匙。已填过的留空表示不改。每家对应的密钥名见下表。如果仓库里还留着通用的 `LLM_API_KEY`，没填专用钥匙的厂商会继续用它，后台里可以把它停用。
+
+信源在 `sources.json`。关掉或删掉的信源不再抓取，看板上已经有的条目会留着。
+
 ### 切换模型厂商
-平时改仓库里的 `config.json`，只改 `llm.provider`，然后提交。可选值：
+平时在后台改。也可以直接改仓库里的 `config.json`：`llm.provider` 选厂商，`llm.models` 覆盖某一家的模型名和地址。可选值：
 
 | provider | 厂商 | 默认模型 | 密钥 |
 |---|---|---|---|
@@ -67,7 +76,7 @@ python fetch_offers.py --rebuild                       # 只归一化现有数�
 
 阶跃星辰的 `step-router-v1` 不支持 `json_object`，预设里已关闭。DeepSeek、通义、硅基流动默认打开。
 
-- **信源**分三层，都在 `fetch_offers.py` 的 `SOURCES` 里：
+- **信源**写在 `sources.json`（后台可改；文件缺失时才用 `fetch_offers.py` 里的内置列表）：
   - **额度变动和厂商动态**（RSS，不用 LLM，每次都会更新）：free-llm-intel 的额度变化，以及 DeepSeek、通义、智谱、硅基流动、Kimi、混元、MiniMax、美团、小米、商汤、StreamLake 的官方动态。动态只保留和免费额度、价格、下线、试用相关的条目。
   - **官方规则页**：阿里云百炼新人额度、千问免费额度。控制台那种前端渲染页面仍然不抓。
   - **社区长文**：两个聚合 README，外加 cn-freellm 的国内平台目录。这类要有当前厂商的密钥才会重新抽取；没有 key 时旧目录留着，RSS 和官方文档照样更新。
@@ -85,5 +94,7 @@ python fetch_offers.py --rebuild                       # 只归一化现有数�
 | `fetch_offers.py` | 主程序：抓取 + 分段抽取 + 合并 + 推送 + 生成看板 |
 | `offers.json` | 当前优惠。每次成功抓取会合并进去，失败不会整份覆盖 |
 | `index.html` | 自包含静态看板（内嵌数据，可按厂商/类型/状态筛选；输出已转义） |
+| `admin.html` | 管理后台。只接受仓库主人的 GitHub 令牌，钥匙写入 Actions Secrets |
+| `sources.json` | 信源列表。定时任务每次读取 |
 | `.github/workflows/daily.yml` | 每日定时任务 |
 | `requirements.txt` | 依赖 |

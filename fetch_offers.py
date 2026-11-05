@@ -32,6 +32,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 OFFERS_FILE = os.path.join(ROOT, "offers.json")
 SITE_FILE = os.path.join(ROOT, "index.html")
 CONFIG_FILE = os.path.join(ROOT, "config.json")
+SOURCES_FILE = os.path.join(ROOT, "sources.json")
 
 LLM_PRESETS = {
     "stepfun": {
@@ -356,12 +357,27 @@ def load_config() -> dict:
         return {}
 
 
+def model_override(cfg: dict, provider: str) -> dict:
+    models = cfg.get("models")
+    if not isinstance(models, dict):
+        return {}
+    ov = models.get(provider)
+    return ov if isinstance(ov, dict) else {}
+
+
+def prefer(env_name: str, override, fallback: str) -> str:
+    env = env_text(env_name)
+    if env:
+        return env
+    text = str(override or "").strip()
+    return text or fallback
+
+
 def resolve_llm() -> dict:
     """选中的厂商决定地址、模型名和该用哪一把密钥。
 
-    已知厂商走内置预设，避免 config 里留下的旧地址在切换后仍然生效。
-    custom 才读取 config.json 里的 base_url / model。
-    优先级：本次环境变量 > config.json 的 llm.provider > stepfun。
+    已知厂商默认走内置预设。后台写在 config.json 的 llm.models 可以改某一家的模型名和地址。
+    环境变量仍可临时盖掉这一次。优先级：环境变量 > llm.models > 内置预设。
     """
     cfg = load_config().get("llm") or {}
     if not isinstance(cfg, dict):
@@ -371,18 +387,23 @@ def resolve_llm() -> dict:
     custom = cfg.get("custom") if isinstance(cfg.get("custom"), dict) else {}
 
     if preset:
-        base_url = env_text("LLM_BASE_URL") or preset["base_url"]
-        model = env_text("LLM_MODEL") or preset["model"]
+        ov = model_override(cfg, provider)
+        base_url = prefer("LLM_BASE_URL", ov.get("base_url"), preset["base_url"])
+        model = prefer("LLM_MODEL", ov.get("model"), preset["model"])
         label = preset["label"]
         key_env = preset["key_env"]
-        default_json = bool(preset["use_json_mode"])
+        default_json = bool(ov["use_json_mode"]) if "use_json_mode" in ov else bool(preset["use_json_mode"])
     else:
         provider = "custom"
-        base_url = env_text("LLM_BASE_URL") or str(custom.get("base_url") or cfg.get("base_url") or "").strip()
-        model = env_text("LLM_MODEL") or str(custom.get("model") or cfg.get("model") or "").strip()
-        label = str(custom.get("label") or "自定义").strip() or "自定义"
+        ov = model_override(cfg, "custom")
+        base_url = prefer("LLM_BASE_URL", ov.get("base_url") or custom.get("base_url"), "")
+        model = prefer("LLM_MODEL", ov.get("model") or custom.get("model"), "")
+        label = str(ov.get("label") or custom.get("label") or "自定义").strip() or "自定义"
         key_env = "CUSTOM_API_KEY"
-        default_json = bool(custom.get("use_json_mode", cfg.get("use_json_mode", False)))
+        if "use_json_mode" in ov:
+            default_json = bool(ov.get("use_json_mode"))
+        else:
+            default_json = bool(custom.get("use_json_mode", cfg.get("use_json_mode", False)))
 
     use_json = env_text("LLM_USE_JSON_MODE")
     if use_json:
@@ -426,6 +447,47 @@ def retain_days() -> int:
         return max(1, int(raw))
     except ValueError:
         return 21
+
+
+def sanitize_source(raw):
+    """后台写入的信源。enabled 为 false 的条目不抓。无效条目返回 None。"""
+    if not isinstance(raw, dict):
+        return None
+    if raw.get("enabled") is False:
+        return None
+    name = str(raw.get("name") or "").strip()
+    kind = str(raw.get("type") or "").strip().lower()
+    url = str(raw.get("url") or "").strip()
+    if not name or kind not in ("rss", "html", "markdown") or not url.startswith("https://"):
+        print(f"[warn] 忽略无效信源: {name or url or kind}", file=sys.stderr)
+        return None
+    src = {"name": name[:80], "type": kind, "url": url[:500]}
+    vendor = str(raw.get("vendor") or "").strip()
+    if vendor:
+        src["vendor"] = vendor[:40]
+    if kind == "rss":
+        try:
+            limit = int(raw.get("limit") or 8)
+        except (TypeError, ValueError):
+            limit = 8
+        src["limit"] = max(1, min(limit, 80))
+        src["promo_only"] = bool(raw.get("promo_only"))
+    return src
+
+
+def load_sources() -> list:
+    if not os.path.exists(SOURCES_FILE):
+        return [dict(s) for s in SOURCES]
+    try:
+        with open(SOURCES_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"[warn] 读取 sources.json 失败，改用内置信源: {e}", file=sys.stderr)
+        return [dict(s) for s in SOURCES]
+    if not isinstance(data, list):
+        print("[warn] sources.json 不是数组，改用内置信源", file=sys.stderr)
+        return [dict(s) for s in SOURCES]
+    return [src for src in (sanitize_source(raw) for raw in data) if src]
 
 
 def squash(name: str) -> str:
@@ -1236,7 +1298,12 @@ def main() -> int:
     successful = set()
     failures = 0
 
-    for src in SOURCES:
+    sources = load_sources()
+    if not sources:
+        print("== sources.json 里没有开启的信源，未改写数据 ==")
+        return 1
+
+    for src in sources:
         kind = src.get("type")
         if kind == "markdown" and not has_key:
             print(f"  · {src['name']}: 跳过长文抽取")
@@ -1311,6 +1378,8 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
   header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
   h1{font-size:22px;font-weight:700;}
   h1 .em{color:var(--green);}
+  .manage{margin-left:auto;color:var(--muted);font-size:13px;text-decoration:none;}
+  .manage:hover{color:var(--green);}
   .meta{color:var(--muted);font-size:13px;flex:1 1 100%;}
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
   .filters select,.filters input{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;}
@@ -1343,6 +1412,7 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
 <div class="wrap">
   <header>
     <h1>🐑 AI 福利追踪 · <span class="em">羊毛看板</span></h1>
+    <a class="manage" href="admin.html">管理</a>
     <div class="meta">更新于 __UPDATED__（北京时间） · 抽取 __LLM__</div>
   </header>
   <div class="filters">

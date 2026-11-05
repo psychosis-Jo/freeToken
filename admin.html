@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>管理后台 · AI 福利追踪</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--line:#2a2f3a;--green:#3ddc84;--orange:#ff9d4d;--text:#e8eaed;--muted:#9aa0aa;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:28px 16px 80px;}
+  a{color:#8eb4ff;text-decoration:none;}
+  button,input,select{font:inherit;color:inherit;}
+  button{cursor:pointer;}
+  button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:2px;}
+  .wrap{max-width:760px;margin:0 auto;}
+  h1{font-size:22px;font-weight:700;}
+  h2{font-size:16px;font-weight:650;margin:22px 0 8px;}
+  .muted{color:var(--muted);font-size:13px;}
+  .gate{max-width:460px;margin:12vh auto 0;}
+  .gate p{margin:10px 0;color:var(--muted);font-size:14px;}
+  label.field{display:block;margin-top:10px;font-size:12px;color:var(--muted);}
+  input[type="text"],input[type="password"],input[type="number"],select{
+    width:100%;margin-top:4px;background:#12151b;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;
+  }
+  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+  button.primary{background:var(--green);color:#06210f;border:none;border-radius:8px;padding:8px 14px;font-weight:650;}
+  button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:7px 12px;}
+  button.warn{background:transparent;color:var(--orange);border:1px solid rgba(255,157,77,.45);border-radius:8px;padding:7px 12px;}
+  button:disabled{opacity:.45;cursor:default;}
+  .msg{margin-top:12px;font-size:13px;min-height:1.2em;}
+  .msg.bad{color:var(--orange);}
+  .msg.ok{color:var(--green);}
+  .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .vendor,.source{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+  .vendor.selected{border-color:var(--green);}
+  .head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .head strong{font-size:15px;}
+  .pill{font-size:11px;padding:1px 8px;border-radius:20px;}
+  .pill.on{color:var(--green);border:1px solid rgba(61,220,132,.4);}
+  .pill.off{color:var(--orange);border:1px solid rgba(255,157,77,.4);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .check{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;color:var(--text);}
+  .check input{width:auto;}
+  .note{margin-top:8px;}
+  .warnbox{background:rgba(255,157,77,.08);border:1px solid rgba(255,157,77,.35);border-radius:10px;padding:10px 12px;font-size:13px;margin:10px 0;}
+  .savebar{position:sticky;bottom:0;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 0;background:var(--bg);border-top:1px solid var(--line);}
+  @media (max-width:640px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="gate" id="gate">
+    <h1>管理后台</h1>
+    <p>这里只给仓库主人用。打开这个地址的人只能看到这个输入框，看不到厂商配置、信源和任何 API key。</p>
+    <form id="gate-form">
+      <label class="field">GitHub 令牌
+        <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… 或 ghp_…">
+      </label>
+      <div class="actions">
+        <button class="primary" type="submit">进入</button>
+      </div>
+      <div class="msg" id="gate-msg" role="status"></div>
+    </form>
+    <p>用你自己的 Personal Access Token。经典令牌勾选 <b style="color:var(--text)">repo</b>。细粒度令牌只授权 <b style="color:var(--text)">psychosis-Jo/freeToken</b>，权限选 Contents 读写、Secrets 读写。令牌只留在这个标签页，关掉就没了。</p>
+    <p><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">创建细粒度令牌</a> · <a href="index.html">回看板</a></p>
+  </section>
+
+  <section id="app" hidden>
+    <div class="top">
+      <h1>管理后台</h1>
+      <div class="muted"><span id="who"></span> · <a href="index.html">回看板</a> · <button class="ghost" id="logout" type="button">退出</button></div>
+    </div>
+    <p class="muted" style="margin-top:8px;">API key 会加密后写入 GitHub Actions Secrets。这个页面和仓库文件里都不保存原文，保存后也不能再查看，只能看到已配置或未配置。</p>
+    <div id="alerts"></div>
+    <h2>抽取模型</h2>
+    <p class="muted">选中的那一家会用于每天的抓取。每家单独一把钥匙，切换厂商就会换钥匙。</p>
+    <div id="vendors"></div>
+    <h2>信源</h2>
+    <p class="muted">关掉或删掉的信源不再抓取。看板上已经收录的条目会留着。</p>
+    <div id="sources"></div>
+    <div class="actions">
+      <button class="ghost" id="add-source" type="button">添加信源</button>
+    </div>
+    <div class="savebar">
+      <button class="primary" id="save" type="button">保存到仓库</button>
+      <div class="msg" id="save-msg" role="status"></div>
+    </div>
+  </section>
+</div>
+<script src="vendor/nacl.min.js"></script>
+<script src="vendor/blake2b.js"></script>
+<script>
+const OWNER = "psychosis-Jo";
+const REPO = "freeToken";
+const PRESETS = [
+  {id:"stepfun", label:"阶跃星辰 StepFun", model:"step-router-v1", base_url:"https://api.stepfun.com/step_plan/v1", use_json_mode:false, key_env:"STEPFUN_API_KEY", hint:"step-router-v1 不要打开 JSON 模式。"},
+  {id:"deepseek", label:"DeepSeek", model:"deepseek-chat", base_url:"https://api.deepseek.com", use_json_mode:true, key_env:"DEEPSEEK_API_KEY"},
+  {id:"qwen", label:"通义千问", model:"qwen-plus", base_url:"https://dashscope.aliyuncs.com/compatible-mode/v1", use_json_mode:true, key_env:"QWEN_API_KEY"},
+  {id:"siliconflow", label:"硅基流动", model:"deepseek-ai/DeepSeek-V3", base_url:"https://api.siliconflow.cn/v1", use_json_mode:true, key_env:"SILICONFLOW_API_KEY"},
+  {id:"custom", label:"自定义", model:"", base_url:"", use_json_mode:false, key_env:"CUSTOM_API_KEY", hint:"填写兼容 OpenAI 的接口地址和模型名。"}
+];
+const TOKEN_KEY = "freetoken.adminToken";
+
+const gate = document.getElementById("gate");
+const app = document.getElementById("app");
+const gateMsg = document.getElementById("gate-msg");
+let token = "";
+let state = null;
+
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+  })[ch]);
+}
+function setMsg(el, text, kind){
+  el.textContent = text || "";
+  el.className = "msg" + (kind ? " " + kind : "");
+}
+function b64ToBytes(b64){
+  const s = atob(b64);
+  const out = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+  return out;
+}
+function bytesToB64(bytes){
+  let s = "";
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s);
+}
+function sealSecret(text, publicKeyB64){
+  const pk = b64ToBytes(publicKeyB64);
+  if (pk.length !== 32) throw new Error("仓库公钥长度不对");
+  const msg = new TextEncoder().encode(text);
+  const ek = nacl.box.keyPair();
+  const joined = new Uint8Array(ek.publicKey.length + pk.length);
+  joined.set(ek.publicKey, 0);
+  joined.set(pk, ek.publicKey.length);
+  const nonce = blake2b(joined, null, 24);
+  const boxed = nacl.box(msg, nonce, pk, ek.secretKey);
+  const out = new Uint8Array(ek.publicKey.length + boxed.length);
+  out.set(ek.publicKey, 0);
+  out.set(boxed, ek.publicKey.length);
+  return bytesToB64(out);
+}
+async function gh(path, options){
+  const opts = options || {};
+  const headers = {
+    Accept: "application/vnd.github+json",
+    Authorization: "Bearer " + token,
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+  if (opts.body) headers["Content-Type"] = "application/json";
+  const res = await fetch("https://api.github.com" + path, {
+    method: opts.method || "GET",
+    headers: headers,
+    body: opts.body || undefined,
+    cache: "no-store"
+  });
+  const text = await res.text();
+  let body = null;
+  if (text) {
+    try { body = JSON.parse(text); } catch (e) { body = text; }
+  }
+  if (!res.ok) {
+    let message = (body && body.message) || ("GitHub " + res.status);
+    if (res.status === 401) message = "令牌无效，GitHub 没有接受。";
+    const err = new Error(message);
+    err.status = res.status;
+    throw err;
+  }
+  return body;
+}
+async function readRepoJson(path){
+  const res = await fetch("https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + path, {
+    headers: {
+      Accept: "application/vnd.github.raw+json",
+      Authorization: "Bearer " + token,
+      "X-GitHub-Api-Version": "2022-11-28"
+    },
+    cache: "no-store"
+  });
+  if (res.status === 404) return null;
+  const text = await res.text();
+  if (!res.ok) {
+    let message = text;
+    try { message = JSON.parse(text).message || text; } catch (e) {}
+    const err = new Error(message || ("GitHub " + res.status));
+    err.status = res.status;
+    throw err;
+  }
+  return JSON.parse(text);
+}
+function blankVendor(preset){
+  return {model: preset.model, base_url: preset.base_url, use_json_mode: !!preset.use_json_mode, key: ""};
+}
+function blankSource(){
+  return {name:"", type:"rss", url:"https://", vendor:"", limit:8, promo_only:true, enabled:true};
+}
+function readForm(){
+  if (!state || !document.getElementById("vendors").children.length) return;
+  document.querySelectorAll("[data-vendor]").forEach(el => {
+    const row = state.vendors[el.dataset.vendor];
+    if (!row) return;
+    if (el.dataset.field === "use_json_mode") row.use_json_mode = el.checked;
+    else row[el.dataset.field] = el.value;
+  });
+  const picked = document.querySelector('input[name="provider"]:checked');
+  if (picked) state.provider = picked.value;
+  document.querySelectorAll("[data-src]").forEach(el => {
+    const src = state.sources[Number(el.dataset.src)];
+    if (!src) return;
+    if (el.dataset.field === "enabled" || el.dataset.field === "promo_only") src[el.dataset.field] = el.checked;
+    else src[el.dataset.field] = el.value;
+  });
+}
+function paint(){
+  const secretNames = state.secretNames;
+  document.getElementById("alerts").innerHTML = alertsHtml(secretNames);
+  document.getElementById("vendors").innerHTML = PRESETS.map(p => {
+    const row = state.vendors[p.id];
+    const on = secretNames.has(p.key_env);
+    const selected = state.provider === p.id ? " selected" : "";
+    return '<article class="vendor' + selected + '">' +
+      '<div class="head"><label class="check" style="margin:0"><input type="radio" name="provider" value="' + esc(p.id) + '"' + (state.provider === p.id ? " checked" : "") + '> <strong>' + esc(p.label) + '</strong></label>' +
+      '<span class="pill ' + (on ? "on" : "off") + '">' + (on ? "钥匙已配置" : "钥匙未配置") + '</span></div>' +
+      '<div class="grid">' +
+      '<label class="field">模型<input data-vendor="' + esc(p.id) + '" data-field="model" type="text" value="' + esc(row.model) + '" autocomplete="off" spellcheck="false"></label>' +
+      '<label class="field">接口地址<input data-vendor="' + esc(p.id) + '" data-field="base_url" type="text" value="' + esc(row.base_url) + '" autocomplete="off" spellcheck="false"></label>' +
+      '</div>' +
+      '<label class="field">API key<input data-vendor="' + esc(p.id) + '" data-field="key" type="password" value="' + esc(row.key) + '" autocomplete="new-password" spellcheck="false" placeholder="' + (on ? "已配置，留空则不修改" : "填写后随保存写入") + '"></label>' +
+      '<label class="check"><input data-vendor="' + esc(p.id) + '" data-field="use_json_mode" type="checkbox"' + (row.use_json_mode ? " checked" : "") + '> 使用 JSON 模式</label>' +
+      (p.hint ? '<p class="muted note">' + esc(p.hint) + '</p>' : '') +
+      '</article>';
+  }).join("");
+  document.getElementById("sources").innerHTML = state.sources.map((s, i) => {
+    const rss = s.type === "rss";
+    return '<article class="source">' +
+      '<div class="head"><label class="check" style="margin:0"><input data-src="' + i + '" data-field="enabled" type="checkbox"' + (s.enabled ? " checked" : "") + '> 启用</label>' +
+      '<button class="ghost" type="button" data-act="del" data-i="' + i + '">删除</button></div>' +
+      '<div class="grid">' +
+      '<label class="field">名称<input data-src="' + i + '" data-field="name" type="text" value="' + esc(s.name) + '"></label>' +
+      '<label class="field">类型<select data-src="' + i + '" data-field="type">' +
+      ["rss","html","markdown"].map(t => '<option value="' + t + '"' + (s.type === t ? " selected" : "") + '>' + t + '</option>').join("") +
+      '</select></label></div>' +
+      '<label class="field">地址<input data-src="' + i + '" data-field="url" type="text" value="' + esc(s.url) + '" spellcheck="false"></label>' +
+      '<div class="grid">' +
+      '<label class="field">厂商（可空）<input data-src="' + i + '" data-field="vendor" type="text" value="' + esc(s.vendor) + '"></label>' +
+      (rss ? '<label class="field">最多条数<input data-src="' + i + '" data-field="limit" type="number" min="1" max="80" value="' + esc(s.limit) + '"></label>' : '<span></span>') +
+      '</div>' +
+      (rss ? '<label class="check"><input data-src="' + i + '" data-field="promo_only" type="checkbox"' + (s.promo_only ? " checked" : "") + '> 只保留额度、价格、下线、试用相关条目</label>' : '') +
+      '</article>';
+  }).join("") || '<p class="muted">还没有信源。</p>';
+}
+function alertsHtml(names){
+  const bits = [];
+  if (names.has("LLM_API_KEY")) {
+    bits.push('<div class="warnbox">仓库里还有一把通用钥匙 LLM_API_KEY。某家没有专用钥匙时，定时任务会用它，切换厂商就不会换钥匙。<div class="actions"><button class="warn" type="button" id="drop-generic">停用通用钥匙</button></div></div>');
+  }
+  const overrides = ["LLM_BASE_URL","LLM_MODEL","LLM_USE_JSON_MODE"].filter(n => names.has(n));
+  if (overrides.length) {
+    bits.push('<div class="warnbox">这些密钥会盖掉后台里填写的模型或地址：' + esc(overrides.join("、")) + '。<div class="actions"><button class="warn" type="button" id="drop-overrides">取消这些覆盖</button></div></div>');
+  }
+  return bits.join("");
+}
+function rerender(){
+  readForm();
+  paint();
+}
+async function refreshSecrets(){
+  const listed = await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets?per_page=100");
+  state.secretNames = new Set((listed.secrets || []).map(s => s.name));
+}
+async function enter(nextToken){
+  token = nextToken;
+  const user = await gh("/user");
+  if (!user || user.login !== OWNER) {
+    token = "";
+    throw new Error("这个令牌属于 " + ((user && user.login) || "未知账号") + "，后台只接受 " + OWNER + "。");
+  }
+  const config = await readRepoJson("config.json") || {};
+  let sources = null;
+  try { sources = await readRepoJson("sources.json"); } catch (e) { if (e.status !== 404) throw e; }
+  if (!Array.isArray(sources)) {
+    const local = await fetch("sources.json", {cache:"no-store"});
+    sources = local.ok ? await local.json() : [];
+  }
+  const llm = (config.llm && typeof config.llm === "object") ? config.llm : {};
+  const models = (llm.models && typeof llm.models === "object") ? llm.models : {};
+  const vendors = {};
+  PRESETS.forEach(p => {
+    const base = blankVendor(p);
+    const ov = models[p.id];
+    if (ov && typeof ov === "object") {
+      if (ov.model) base.model = String(ov.model);
+      if (ov.base_url) base.base_url = String(ov.base_url);
+      if ("use_json_mode" in ov) base.use_json_mode = !!ov.use_json_mode;
+    } else if (p.id === "custom" && llm.custom && typeof llm.custom === "object") {
+      base.model = String(llm.custom.model || "");
+      base.base_url = String(llm.custom.base_url || "");
+      base.use_json_mode = !!llm.custom.use_json_mode;
+    }
+    vendors[p.id] = base;
+  });
+  state = {
+    provider: String(llm.provider || "stepfun"),
+    vendors: vendors,
+    sources: (Array.isArray(sources) ? sources : []).map(raw => ({
+      name: String((raw && raw.name) || ""),
+      type: ["rss","html","markdown"].indexOf(raw && raw.type) >= 0 ? raw.type : "rss",
+      url: String((raw && raw.url) || ""),
+      vendor: String((raw && raw.vendor) || ""),
+      limit: Number(raw && raw.limit) || 8,
+      promo_only: !!(raw && raw.promo_only),
+      enabled: !(raw && raw.enabled === false)
+    })),
+    secretNames: new Set(),
+    dashboard_url: config.dashboard_url || "",
+    retain_days: config.retain_days || 21
+  };
+  if (PRESETS.every(p => p.id !== state.provider)) state.provider = "custom";
+  await refreshSecrets();
+  sessionStorage.setItem(TOKEN_KEY, token);
+  document.getElementById("who").textContent = user.login;
+  gate.hidden = true;
+  app.hidden = false;
+  paint();
+}
+function buildPayload(){
+  readForm();
+  const models = {};
+  const keys = [];
+  PRESETS.forEach(p => {
+    const row = state.vendors[p.id];
+    const model = String(row.model || "").trim();
+    const base = String(row.base_url || "").trim();
+    models[p.id] = {model: model, base_url: base, use_json_mode: !!row.use_json_mode};
+    const key = String(row.key || "").trim();
+    if (key) keys.push({env: p.key_env, value: key, label: p.label});
+  });
+  models.custom.label = "自定义";
+  const config = {
+    llm: {provider: state.provider, models: models, custom: models.custom},
+    dashboard_url: state.dashboard_url || "",
+    retain_days: Number(state.retain_days) || 21
+  };
+  const sources = state.sources.map(s => {
+    const row = {
+      name: String(s.name || "").trim(),
+      type: s.type,
+      url: String(s.url || "").trim(),
+      enabled: !!s.enabled
+    };
+    const vendor = String(s.vendor || "").trim();
+    if (vendor) row.vendor = vendor;
+    if (s.type === "rss") {
+      let limit = parseInt(s.limit, 10);
+      if (!limit || limit < 1) limit = 8;
+      if (limit > 80) limit = 80;
+      row.limit = limit;
+      row.promo_only = !!s.promo_only;
+    }
+    return row;
+  });
+  return {config: config, sources: sources, keys: keys};
+}
+function validate(payload){
+  const current = payload.config.llm.models[payload.config.llm.provider] || {};
+  if (!String(current.model || "").trim()) return "当前厂商还没有填写模型名。";
+  if (payload.config.llm.provider === "custom" && !String(current.base_url || "").trim()) return "自定义厂商要填写接口地址。";
+  if (!payload.sources.some(s => s.enabled)) return "至少保留一个开启的信源。";
+  for (const s of payload.sources) {
+    if (!s.name) return "有一条信源没有名称。";
+    if (!/^https:\/\//i.test(s.url)) return "信源「" + s.name + "」的地址要以 https:// 开头。";
+  }
+  for (const item of payload.keys) {
+    if (item.value.length < 12) return item.label + " 的 API key 太短。";
+    if (/\s/.test(item.value)) return item.label + " 的 API key 里有空格或换行。";
+  }
+  const dumped = JSON.stringify(payload.config) + JSON.stringify(payload.sources);
+  for (const item of payload.keys) {
+    if (dumped.indexOf(item.value) >= 0) return "API key 被写进了模型名或信源地址，已停止保存。";
+  }
+  return "";
+}
+async function commitFiles(files, message){
+  let lastError = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const ref = await gh("/repos/" + OWNER + "/" + REPO + "/git/ref/heads/main");
+      const parent = ref.object.sha;
+      const parentCommit = await gh("/repos/" + OWNER + "/" + REPO + "/git/commits/" + parent);
+      const tree = await gh("/repos/" + OWNER + "/" + REPO + "/git/trees", {
+        method: "POST",
+        body: JSON.stringify({
+          base_tree: parentCommit.tree.sha,
+          tree: files.map(f => ({path: f.path, mode: "100644", type: "blob", content: f.content}))
+        })
+      });
+      const created = await gh("/repos/" + OWNER + "/" + REPO + "/git/commits", {
+        method: "POST",
+        body: JSON.stringify({message: message, tree: tree.sha, parents: [parent]})
+      });
+      await gh("/repos/" + OWNER + "/" + REPO + "/git/refs/heads/main", {
+        method: "PATCH",
+        body: JSON.stringify({sha: created.sha})
+      });
+      return;
+    } catch (e) {
+      lastError = e;
+      if (!(e.status === 422 || e.status === 409) || attempt === 1) throw e;
+    }
+  }
+  throw lastError;
+}
+async function save(){
+  const button = document.getElementById("save");
+  const msg = document.getElementById("save-msg");
+  button.disabled = true;
+  setMsg(msg, "正在保存…");
+  let committed = false;
+  try {
+    const payload = buildPayload();
+    const problem = validate(payload);
+    if (problem) {
+      setMsg(msg, problem, "bad");
+      return;
+    }
+    await commitFiles([
+      {path: "config.json", content: JSON.stringify(payload.config, null, 2) + "\n"},
+      {path: "sources.json", content: JSON.stringify(payload.sources, null, 2) + "\n"}
+    ], "chore: 更新后台里的厂商和信源");
+    committed = true;
+    if (payload.keys.length) {
+      const pk = await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets/public-key");
+      for (const item of payload.keys) {
+        await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets/" + item.env, {
+          method: "PUT",
+          body: JSON.stringify({
+            encrypted_value: sealSecret(item.value, pk.key),
+            key_id: pk.key_id
+          })
+        });
+        state.vendors[PRESETS.find(p => p.key_env === item.env).id].key = "";
+      }
+    }
+    await refreshSecrets();
+    paint();
+    setMsg(msg, "已保存。厂商和信源写入了仓库" + (payload.keys.length ? "，并更新了 " + payload.keys.length + " 把钥匙" : "") + "。下次定时抓取，或在 Actions 里手动跑一次，才会用新配置。", "ok");
+  } catch (e) {
+    setMsg(msg, (committed ? "厂商和信源已写入，但钥匙没有写上：" : "保存失败：") + (e.message || "网络错误"), "bad");
+  } finally {
+    button.disabled = false;
+  }
+}
+async function deleteSecrets(names){
+  for (const name of names) {
+    await gh("/repos/" + OWNER + "/" + REPO + "/actions/secrets/" + name, {method: "DELETE"});
+  }
+  await refreshSecrets();
+  paint();
+}
+document.getElementById("gate-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const value = document.getElementById("token").value.trim();
+  if (!value) {
+    setMsg(gateMsg, "先粘贴令牌。", "bad");
+    return;
+  }
+  if (typeof nacl === "undefined" || typeof blake2b !== "function") {
+    setMsg(gateMsg, "加密组件没有加载，无法安全保存钥匙。", "bad");
+    return;
+  }
+  setMsg(gateMsg, "正在确认身份…");
+  try {
+    await enter(value);
+    document.getElementById("token").value = "";
+  } catch (e) {
+    token = "";
+    sessionStorage.removeItem(TOKEN_KEY);
+    setMsg(gateMsg, e.message || "无法进入", "bad");
+  }
+});
+document.getElementById("logout").addEventListener("click", () => {
+  token = "";
+  state = null;
+  sessionStorage.removeItem(TOKEN_KEY);
+  app.hidden = true;
+  gate.hidden = false;
+  setMsg(gateMsg, "已退出。");
+});
+document.getElementById("add-source").addEventListener("click", () => {
+  readForm();
+  state.sources.push(blankSource());
+  paint();
+});
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("app").addEventListener("click", async (event) => {
+  const del = event.target.closest("[data-act='del']");
+  if (del) {
+    readForm();
+    state.sources.splice(Number(del.dataset.i), 1);
+    paint();
+    return;
+  }
+  if (event.target.id === "drop-generic") {
+    readForm();
+    if (!confirm("停用后，没有专用钥匙的厂商就不能再抽取社区长文。确定停用通用钥匙？")) return;
+    try { await deleteSecrets(["LLM_API_KEY"]); }
+    catch (e) { setMsg(document.getElementById("save-msg"), "停用失败：" + e.message, "bad"); }
+    return;
+  }
+  if (event.target.id === "drop-overrides") {
+    readForm();
+    try { await deleteSecrets(["LLM_BASE_URL", "LLM_MODEL", "LLM_USE_JSON_MODE"].filter(n => state.secretNames.has(n))); }
+    catch (e) { setMsg(document.getElementById("save-msg"), "取消覆盖失败：" + e.message, "bad"); }
+  }
+});
+document.getElementById("app").addEventListener("change", (event) => {
+  if (event.target.dataset.field === "type" || event.target.name === "provider") rerender();
+});
+
+const saved = sessionStorage.getItem(TOKEN_KEY);
+if (saved && typeof nacl !== "undefined") {
+  setMsg(gateMsg, "正在确认身份…");
+  enter(saved).catch(e => {
+    token = "";
+    sessionStorage.removeItem(TOKEN_KEY);
+    setMsg(gateMsg, e.message || "需要重新登录", "bad");
+  });
+}
+</script>
+</body>
+</html>
