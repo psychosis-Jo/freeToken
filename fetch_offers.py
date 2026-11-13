@@ -507,6 +507,122 @@ def canonical_vendor(name: str) -> str:
     return raw
 
 
+# 去领取打开的注册页或控制台。同一家写上看板里会出现的名字。
+# 条目自己的链接已经是控制台、注册页时，优先用那条（能保留邀请链接）。
+_CLAIM_GROUPS = (
+    (("Anyscale",), "https://console.anyscale.com/register/"),
+    (("AWS",), "https://console.aws.amazon.com/bedrock/home"),
+    (("Baseten",), "https://app.baseten.co"),
+    (("Cerebras",), "https://cloud.cerebras.ai"),
+    (("Cloudflare", "Cloudflare Workers AI"), "https://dash.cloudflare.com"),
+    (("Cohere",), "https://dashboard.cohere.com"),
+    (("Cursor",), "https://cursor.com/dashboard"),
+    (("DeepSeek",), "https://platform.deepseek.com"),
+    (("DigitalOcean",), "https://cloud.digitalocean.com/registrations/new"),
+    (("Fireworks", "Fireworks AI"), "https://app.fireworks.ai/signup"),
+    (("GitHub",), "https://github.com/marketplace/models"),
+    (("GitHub Copilot",), "https://github.com/copilot"),
+    (("Morph Labs",), "https://www.morphllm.com/sign-up"),
+    (("Google AI Studio", "Google Gemini"), "https://aistudio.google.com"),
+    (("Google Cloud",), "https://console.cloud.google.com/vertex-ai/model-garden"),
+    (("Groq",), "https://console.groq.com"),
+    (("Hugging Face",), "https://huggingface.co/settings/tokens"),
+    (("Jina AI",), "https://jina.ai"),
+    (("MiniMax",), "https://platform.minimax.io"),
+    (("Mistral",), "https://console.mistral.ai"),
+    (("Modal",), "https://modal.com/signup"),
+    (("NLP Cloud",), "https://nlpcloud.com/home/token"),
+    (("Novita",), "https://novita.ai/user/login"),
+    (("NVIDIA",), "https://build.nvidia.com"),
+    (("OpenRouter",), "https://openrouter.ai/settings/credits"),
+    (("PPIO",), "https://ppio.com/user/register"),
+    (("Qoder",), "https://qoder.com/users/sign-up"),
+    (("SambaNova Cloud",), "https://cloud.sambanova.ai"),
+    (("Together AI",), "https://api.together.ai/signin"),
+    (("Upstage",), "https://console.upstage.ai"),
+    (("Vercel",), "https://vercel.com/signup"),
+    (("xAI Grok", "xAI"), "https://console.x.ai"),
+    (("Zed",), "https://dashboard.zed.dev/account"),
+    (("Anthropic", "Anthropic Claude"), "https://console.anthropic.com"),
+    (("AI21",), "https://studio.ai21.com"),
+    (("Hyperbolic",), "https://app.hyperbolic.xyz"),
+    (("Nebius",), "https://studio.nebius.com"),
+    (("360智脑",), "https://ai.360.com/open"),
+    (("云知声", "云知声 Token Hub"), "https://ai.unisound.com"),
+    (("千问",), "https://platform.qianwenai.com"),
+    (("商汤",), "https://signin.sensecore.cn"),
+    (("小米",), "https://platform.xiaomimimo.com"),
+    (("文心快码 Comate", "文心快码"), "https://comate.baidu.com"),
+    (("昆仑万维",), "https://model-platform.tiangong.cn"),
+    (("智谱AI", "智谱"), "https://open.bigmodel.cn/register"),
+    (("月之暗面",), "https://platform.kimi.com"),
+    (("火山引擎",), "https://console.volcengine.com/ark"),
+    (("百度智能云", "百度智能云千帆"), "https://console.bce.baidu.com/qianfan/overview"),
+    (("硅基流动", "SiliconFlow 硅基流动"), "https://cloud.siliconflow.cn"),
+    (("科大讯飞", "科大讯飞星火"), "https://console.xfyun.cn/app/myapp"),
+    (("美团",), "https://longcat.chat/platform"),
+    (("腾讯云",), "https://console.cloud.tencent.com/hunyuan"),
+    (("阿里云",), "https://bailian.console.aliyun.com"),
+    (("零一万物",), "https://platform.lingyiwanwu.com"),
+    (("DMXAPI",), "https://dmxapi.cn"),
+)
+
+
+def _claim_table():
+    table = {}
+    for names, url in _CLAIM_GROUPS:
+        for name in names:
+            table[vendor_key(name)] = url
+            table[squash(name)] = url
+    return table
+
+
+CLAIM_URLS = _claim_table()
+
+_DOC_PATH_HINTS = (
+    "/docs", "/doc/", "/document", "/news", "changelog", "release-note", "/blog",
+)
+
+
+def looks_like_claim(url: str) -> bool:
+    """链接本身就是注册页或控制台，而不是文档、动态或仓库。"""
+    raw = (url or "").strip()
+    if not raw.lower().startswith(("http://", "https://")):
+        return False
+    host = host_of(raw)
+    path = (urlparse(raw).path or "/").lower()
+    if host == "github.com":
+        return path.startswith("/marketplace/models")
+    if any(hint in path for hint in _DOC_PATH_HINTS) or "/product" in path:
+        return False
+    if host in ("aistudio.google.com", "build.nvidia.com"):
+        return True
+    if host == "longcat.chat" and path.startswith("/platform"):
+        return True
+    prefixes = (
+        "console.", "dashboard.", "platform.", "app.", "studio.", "cloud.",
+        "signin.", "build.", "dash.", "model-platform.",
+    )
+    if host.startswith(prefixes) or ".console." in host:
+        return True
+    if path.startswith(("/signup", "/register", "/login", "/user/")):
+        return True
+    return False
+
+
+def offer_claim_url(vendor: str, url: str) -> str:
+    raw = (url or "").strip()
+    if looks_like_claim(raw):
+        return raw
+    page = CLAIM_URLS.get(vendor_key(vendor)) or CLAIM_URLS.get(squash(vendor)) or ""
+    if page:
+        return page
+    if raw.lower().startswith(("http://", "https://")) and host_of(raw) != "github.com":
+        if not any(hint in (urlparse(raw).path or "").lower() for hint in _DOC_PATH_HINTS):
+            return raw
+    return ""
+
+
 def has_word(text: str, words: tuple) -> bool:
     low = (text or "").lower()
     for w in words:
@@ -861,6 +977,9 @@ def public_offer(o: dict) -> dict:
         if k in optional and not v:
             continue
         out[k] = v
+    claim = offer_claim_url(out.get("vendor") or "", out.get("url") or "")
+    if claim:
+        out["claim_url"] = claim
     return out
 
 
@@ -1225,10 +1344,7 @@ def push_feishu(new_offers: list):
 def build_site(offers: list, path: str = SITE_FILE):
     data = json.dumps([public_offer(o) for o in offers], ensure_ascii=False).replace("<", "\\u003c")
     now = shanghai_now()
-    conf = resolve_llm()
-    banner = llm_banner(conf).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     html = SITE_TEMPLATE.replace("__UPDATED__", now.strftime("%Y-%m-%d %H:%M"))
-    html = html.replace("__LLM__", banner)
     html = html.replace("__TODAY__", now.strftime("%Y-%m-%d"))
     html = html.replace("__DATA__", data)
     with open(path, "w", encoding="utf-8") as f:
@@ -1411,6 +1527,8 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
   .row b{color:var(--text);font-weight:500;}
   .src{margin-top:6px;font-size:12px;color:#6b7280;overflow-wrap:anywhere;}
   .src a{color:#5b8def;text-decoration:none;}
+  .claim{display:inline-block;margin-top:10px;background:var(--green);color:#06210f;font-size:12.5px;font-weight:600;text-decoration:none;border-radius:8px;padding:5px 12px;}
+  .claim:hover{filter:brightness(1.06);}
   .empty{text-align:center;color:var(--muted);padding:40px;}
 </style>
 </head>
@@ -1419,7 +1537,7 @@ SITE_TEMPLATE = r"""<!DOCTYPE html>
   <header>
     <h1>freetoken</h1>
     <a class="manage" href="admin.html">管理</a>
-    <div class="meta">更新于 __UPDATED__（北京时间） · 抽取 __LLM__</div>
+    <div class="meta">更新于 __UPDATED__（北京时间）</div>
   </header>
   <div class="filters">
     <input id="q" placeholder="搜索厂商 / 模型 / 条件 / 关键词">
@@ -1559,6 +1677,8 @@ function render(){
     if (o.conditions) bits.push(`<span><b>条件</b> ${esc(o.conditions)}</span>`);
     const href = safeHref(o.url);
     const url = href ? ` · <a href="${href}" target="_blank" rel="noopener noreferrer">来源</a>` : '';
+    const claimHref = f.expired ? '' : safeHref(o.claim_url);
+    const claim = claimHref ? `<a class="claim" href="${claimHref}" target="_blank" rel="noopener noreferrer">去领取</a>` : '';
     const seen = o.first_seen ? ` · 发现于 ${esc(o.first_seen)}` : '';
     const confirmed = o.last_seen && o.last_seen !== o.first_seen ? ` · 确认于 ${esc(o.last_seen)}` : '';
     const missing = o.missing_since ? ` · ${esc(o.missing_since)} 起未再出现` : '';
@@ -1571,6 +1691,7 @@ function render(){
         <span class="model">${esc(o.model || '')}</span></div>
       <div class="summary">${esc(o.summary || '')}</div>
       <div class="row">${bits.join('')}</div>
+      ${claim}
       <div class="src">📡 ${esc(o.source || '')}${seen}${confirmed}${missing}${url}</div>
     </div>`;
   }).join('');
