@@ -25,7 +25,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-16-zhinao_360",
     "first_seen": "2026-11-16",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://ai.360.com/open"
   },
   {
@@ -145,7 +145,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-01-anthropic",
     "first_seen": "2026-11-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://console.anthropic.com"
   },
   {
@@ -195,7 +195,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-anyscale",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://console.anyscale.com/register/"
   },
   {
@@ -380,7 +380,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-21-cloudflare_workers_ai",
     "first_seen": "2026-10-21",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://dash.cloudflare.com"
   },
   {
@@ -482,7 +482,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-04-deepseek",
     "first_seen": "2026-11-04",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "expires_on": "2026-11-01",
     "claim_url": "https://platform.deepseek.com"
   },
@@ -499,7 +499,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-18-deepseek",
     "first_seen": "2026-10-18",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.deepseek.com"
   },
   {
@@ -515,7 +515,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-17-deepseek",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.deepseek.com"
   },
   {
@@ -531,7 +531,7 @@
     "region": "国内",
     "external_id": "https://api-docs.deepseek.com/zh-cn/news/news0802",
     "first_seen": "2024-08-02",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.deepseek.com"
   },
   {
@@ -547,7 +547,23 @@
     "region": "国内",
     "external_id": "changelog-2026-11-15-deepseek",
     "first_seen": "2026-11-15",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
+    "claim_url": "https://platform.deepseek.com"
+  },
+  {
+    "vendor": "DeepSeek",
+    "model": "通用",
+    "offer_type": "动态",
+    "amount": "",
+    "deadline": "",
+    "conditions": "",
+    "url": "https://github.com/rockbenben/free-llm-intel",
+    "summary": "更新 Search 与 Fetch API 计费规则：模型调用触发的服务端搜索与网页抓取工具本身免收调用费，改为仅按 Token 计费，API 计费单位改为每 1,000 次成功请求 5 元 实行峰谷定价（元/百万 tokens，高峰为工作日 9:00–12:00、14:00–18:00，空闲半价）：deepseek-flash 输出 8.0/4.0、缓存命中 0.04/0.02；deepseek-v4-pro 输出 27.0/13.5、缓存命中 0.30/0.15。周边 API 计费：搜… → 实行峰谷定",
+    "source": "额度变动（free-llm-intel）",
+    "region": "国内",
+    "external_id": "changelog-2026-11-20-deepseek",
+    "first_seen": "2026-11-20",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.deepseek.com"
   },
   {
@@ -603,6 +619,7 @@
     "external_id": "changelog-2026-10-17-fireworks_ai",
     "first_seen": "2026-10-17",
     "last_seen": "2026-11-19",
+    "missing_since": "2026-11-20",
     "claim_url": "https://app.fireworks.ai/signup"
   },
   {
@@ -619,6 +636,7 @@
     "external_id": "changelog-2026-10-14-fireworks_ai",
     "first_seen": "2026-10-14",
     "last_seen": "2026-11-19",
+    "missing_since": "2026-11-20",
     "claim_url": "https://app.fireworks.ai/signup"
   },
   {
@@ -647,7 +665,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-09-github_copilot",
     "first_seen": "2026-11-09",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://github.com/copilot"
   },
   {
@@ -820,6 +838,7 @@
     "external_id": "changelog-2026-10-14-google_gemini",
     "first_seen": "2026-10-14",
     "last_seen": "2026-11-19",
+    "missing_since": "2026-11-20",
     "claim_url": "https://aistudio.google.com"
   },
   {
@@ -835,7 +854,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-08-google_gemini",
     "first_seen": "2026-11-08",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://aistudio.google.com"
   },
   {
@@ -851,7 +870,23 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-google_gemini",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
+    "claim_url": "https://aistudio.google.com"
+  },
+  {
+    "vendor": "Google Gemini",
+    "model": "通用",
+    "offer_type": "动态",
+    "amount": "",
+    "deadline": "",
+    "conditions": "",
+    "url": "https://github.com/rockbenben/free-llm-intel",
+    "summary": "官方明确 Gemini 4 Neon 与 Genie 4（models/genie-4）不支持免费层（Not available / Not supported） `Gemini 3.x Flash`、`Gemma 4`、Gemini Embedding 系列 —— 免费层可用，按速率限额滚动（RPD 太平洋时间午夜重置）；多数模型官方不公开逐模型数值（具体限额在 AI Studio 内显示），调用前以 AI Studio 的 Rate Limit 页为准、`Gemin… → `",
+    "source": "额度变动（free-llm-intel）",
+    "region": "国外",
+    "external_id": "changelog-2026-11-20-google_gemini",
+    "first_seen": "2026-11-20",
+    "last_seen": "2026-11-20",
     "claim_url": "https://aistudio.google.com"
   },
   {
@@ -867,7 +902,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-gcp_vertex_ai",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "Groq",
@@ -908,7 +943,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-17-huggingface",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://huggingface.co/settings/tokens"
   },
   {
@@ -963,7 +998,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-20-inception_labs",
     "first_seen": "2026-10-20",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "InceptionLabs",
@@ -1033,7 +1068,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-20-mancer",
     "first_seen": "2026-10-20",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "MiniMax",
@@ -1075,6 +1110,7 @@
     "external_id": "changelog-2026-10-14-minimax",
     "first_seen": "2026-10-14",
     "last_seen": "2026-11-19",
+    "missing_since": "2026-11-20",
     "claim_url": "https://platform.minimax.io"
   },
   {
@@ -1172,7 +1208,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-09-morph_labs",
     "first_seen": "2026-11-09",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://www.morphllm.com/sign-up"
   },
   {
@@ -1188,7 +1224,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-morph_labs",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://www.morphllm.com/sign-up"
   },
   {
@@ -1230,7 +1266,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-20-nvidia_nim",
     "first_seen": "2026-10-20",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://build.nvidia.com"
   },
   {
@@ -1328,7 +1364,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-17-openrouter",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://openrouter.ai/settings/credits"
   },
   {
@@ -1370,7 +1406,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-parallel_ai",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "Qoder",
@@ -1390,6 +1426,22 @@
     "claim_url": "https://qoder.com/users/sign-up"
   },
   {
+    "vendor": "Qoder",
+    "model": "通用",
+    "offer_type": "动态",
+    "amount": "",
+    "deadline": "",
+    "conditions": "",
+    "url": "https://github.com/rockbenben/free-llm-intel",
+    "summary": "自 2026-11-19 起，每日领取 100 Credits 活动不再向 Free 用户开放，仅限 Pro 试用期及个人付费用户领取；同时明确了 Pro 试用各端发放方式 免费层 + 每日赠送：Free 方案可用基础模型（用户消息条数受限）；新用户 2 周 Pro 试用赠 300 Credits；自 2026-09-18 起个人用户（免费与付费皆可）在 Qoder 桌面端每日领取 100 Credits（每天 10:00 开一个领取窗口，需手动领… → 免费层 + 试用期每日赠送：Fre",
+    "source": "额度变动（free-llm-intel）",
+    "region": "国外",
+    "external_id": "changelog-2026-11-20-qoder",
+    "first_seen": "2026-11-20",
+    "last_seen": "2026-11-20",
+    "claim_url": "https://qoder.com/users/sign-up"
+  },
+  {
     "vendor": "Relace",
     "model": "通用",
     "offer_type": "动态",
@@ -1402,7 +1454,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-17-relace",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "SambaNova Cloud",
@@ -1473,7 +1525,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-20-together_ai",
     "first_seen": "2026-10-20",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://api.together.ai/signin"
   },
   {
@@ -1489,7 +1541,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-18-together_ai",
     "first_seen": "2026-10-18",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://api.together.ai/signin"
   },
   {
@@ -1539,7 +1591,7 @@
     "region": "国外",
     "external_id": "changelog-2026-11-16-together_ai",
     "first_seen": "2026-11-16",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://api.together.ai/signin"
   },
   {
@@ -1598,7 +1650,7 @@
     "region": "国外",
     "external_id": "changelog-2026-10-17-xai_grok",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://console.x.ai"
   },
   {
@@ -1653,7 +1705,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-02-unisound_shanhai",
     "first_seen": "2026-11-02",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://ai.unisound.com"
   },
   {
@@ -1669,7 +1721,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-26-unisound_shanhai",
     "first_seen": "2026-10-26",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://ai.unisound.com"
   },
   {
@@ -1697,12 +1749,12 @@
     "deadline": "",
     "conditions": "以官方页面为准",
     "url": "https://platform.qianwenai.com/docs/resources/free-quota",
-    "summary": "免费额度 - 千问AI平台；新用户完成实名认证后可领取免费额度，了解额度有效期和用尽即停设置；新用户完成实名认证并首次开通千问AI平台后，大部分模型会自动获得独立的免费额度。该总量会随新模型上线而变化。具体哪些模型有免费额度，以权益页面显示为准。；免费额度的有效期通常为 90 天，但两类额度的起算时间不同：；：完成实名认证并开通千问AI平台时，已发布的模型会自动获得免费额度，有效期从",
+    "summary": "新用户完成实名认证后可领取免费额度，了解额度有效期和用尽即停设置；新用户完成实名认证并首次开通千问AI平台后，大部分模型会自动获得独立的免费额度。该总量会随新模型上线而变化。具体哪些模型有免费额度，以权益页面显示为准。；免费额度的有效期通常为 90 天，但两类额度的起算时间不同：；：完成实名认证并开通千问AI平台时，已发布的模型会自动获得免费额度，有效期从；免费额度过期后自动失效，不支持补发、延期或重置：",
     "source": "千问 · 免费额度说明",
     "region": "国内",
     "external_id": "doc:https://platform.qianwenai.com/docs/resources/free-quota",
     "first_seen": "2026-11-05",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.qianwenai.com"
   },
   {
@@ -1744,7 +1796,22 @@
     "region": "国内",
     "external_id": "changelog-2026-11-16-moss",
     "first_seen": "2026-11-16",
-    "last_seen": "2026-11-19"
+    "last_seen": "2026-11-20"
+  },
+  {
+    "vendor": "复旦 MOSS (MOSI)",
+    "model": "通用",
+    "offer_type": "动态",
+    "amount": "",
+    "deadline": "",
+    "conditions": "",
+    "url": "https://github.com/rockbenben/free-llm-intel",
+    "summary": "MOSS-Live-1.0 结束限时免费并开始按 ¥0.15/分钟计费；新增 MOSS-TTS-2.0-Flash-Preview 付费模型 限时免费 0 积分：`nex-n2.6`（snapshot `nex-n2.6-2026-11-05`，多模态语言模型，文本/图片/视频→文本，`POST /v1/chat/completions`）—— 实测 HTTP 200 真实出文；注意它是推理模型，会先消耗大量 reasoning token… → 限时免费",
+    "source": "额度变动（free-llm-intel）",
+    "region": "国内",
+    "external_id": "changelog-2026-11-20-moss",
+    "first_seen": "2026-11-20",
+    "last_seen": "2026-11-20"
   },
   {
     "vendor": "小米",
@@ -1759,7 +1826,7 @@
     "region": "国内",
     "external_id": "https://mimo.mi.com/docs/zh-CN/updates/feature/platform#2026-6-11-%E9%82%80%E8%AF%B7%E6%9C%89%E7%A4%BC%E6%B4%BB%E5%8A%A8%E5%8D%87%E7%BA%A7",
     "first_seen": "2026-06-11",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.xiaomimimo.com"
   },
   {
@@ -1775,7 +1842,7 @@
     "region": "国内",
     "external_id": "https://mimo.mi.com/docs/zh-CN/updates/feature/platform#2026-4-29-%E9%82%80%E8%AF%B7%E6%9C%89%E7%A4%BC%E6%B4%BB%E5%8A%A8%E4%B8%8A%E7%BA%BF",
     "first_seen": "2026-04-29",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.xiaomimimo.com"
   },
   {
@@ -1791,7 +1858,7 @@
     "region": "国内",
     "external_id": "https://mimo.mi.com/docs/zh-CN/updates/feature/platform#2026-01-26-%E8%AE%A1%E8%B4%B9%E5%8A%9F%E8%83%BD%E4%B8%8A%E7%BA%BF",
     "first_seen": "2026-01-26",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.xiaomimimo.com"
   },
   {
@@ -1807,7 +1874,7 @@
     "region": "国内",
     "external_id": "https://mimo.mi.com/docs/zh-CN/news/latest/beta-extended",
     "first_seen": "2026-11-05",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.xiaomimimo.com"
   },
   {
@@ -1823,8 +1890,24 @@
     "region": "国内",
     "external_id": "changelog-2026-11-02-xiaomi_mimo",
     "first_seen": "2026-11-02",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "expires_on": "2026-10-21",
+    "claim_url": "https://platform.xiaomimimo.com"
+  },
+  {
+    "vendor": "小米",
+    "model": "通用",
+    "offer_type": "动态",
+    "amount": "",
+    "deadline": "",
+    "conditions": "",
+    "url": "https://mimo.mi.com/docs/zh-CN/updates/feature/platform",
+    "summary": "TokenPlan 限时支持 UltraSpeed 超高速旗舰推理模型",
+    "source": "小米 MiMo 动态",
+    "region": "国内",
+    "external_id": "https://mimo.mi.com/docs/zh-CN/updates/feature/platform#v2232026-11-19",
+    "first_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.xiaomimimo.com"
   },
   {
@@ -1909,7 +1992,7 @@
     "region": "国内",
     "external_id": "https://docs.bigmodel.cn/cn/update/new-releases#2026-01-19",
     "first_seen": "2026-01-19",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://open.bigmodel.cn/register"
   },
   {
@@ -1925,7 +2008,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-24-moonshot_kimi",
     "first_seen": "2026-10-24",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -1941,7 +2024,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2026%E5%B9%B410%E6%9C%88",
     "first_seen": "2026-10-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -1957,7 +2040,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog/changelog/changelog#2026%E5%B9%B48%E6%9C%8831%E6%97%A5",
     "first_seen": "2026-08-31",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -1973,7 +2056,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2026%E5%B9%B48%E6%9C%88",
     "first_seen": "2026-08-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -1989,7 +2072,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2026%E5%B9%B45%E6%9C%88",
     "first_seen": "2026-05-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2005,7 +2088,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2026%E5%B9%B41%E6%9C%88",
     "first_seen": "2026-01-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2021,7 +2104,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2025%E5%B9%B411%E6%9C%88",
     "first_seen": "2025-11-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2037,7 +2120,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2025%E5%B9%B410%E6%9C%88",
     "first_seen": "2025-10-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2053,7 +2136,7 @@
     "region": "国内",
     "external_id": "https://platform.kimi.com/docs/changelog#2025%E5%B9%B44%E6%9C%88",
     "first_seen": "2025-04-01",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2069,7 +2152,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-08-moonshot_kimi",
     "first_seen": "2026-11-08",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://platform.kimi.com"
   },
   {
@@ -2180,7 +2263,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4ernie-image-turbo-%E6%A8%A1%E5%9E%8B%E5%B0%86%E4%B",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2196,7 +2279,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4nex-n2-proqwen35-397b-a17bminimax-m25-%E7%AD%89%E6",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2212,7 +2295,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4%E7%94%9F%E5%9B%BE-api-%E4%B8%8B%E7%BA%BF-batch_si",
     "first_seen": "2026-09-15",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2228,7 +2311,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%A0%BC%E8%B0%83%E6%95%B4deepseek-v4-flash-%E6%A8%A1%E5%9E%8B%E5%88%86%E6%9",
     "first_seen": "2026-09-11",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2244,7 +2327,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%A0%BC%E8%B0%83%E6%95%B4deepseek-v4-pro-%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%",
     "first_seen": "2026-08-14",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2311,7 +2394,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4wan22-%E7%B3%BB%E5%88%97%E4%B8%8B%E7%BA%BFminimax-",
     "first_seen": "2026-11-03",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2327,7 +2410,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4qwen3-coder-30b-a3b-instructglm-45v-%E7%AD%89%E6%A",
     "first_seen": "2026-11-03",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2343,7 +2426,7 @@
     "region": "国内",
     "external_id": "https://docs.siliconflow.cn/docs/release-notes/overview#%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E8%B0%83%E6%95%B4wan22-%E7%B3%BB%E5%88%97glm-51-%E4%B8%8B%E7%BA%BFm",
     "first_seen": "2026-11-03",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://cloud.siliconflow.cn"
   },
   {
@@ -2411,7 +2494,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-20-iflytek_spark",
     "first_seen": "2026-10-20",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://console.xfyun.cn/app/myapp"
   },
   {
@@ -2440,7 +2523,7 @@
     "region": "国内",
     "external_id": "https://longcat.chat/platform/docs/zh/ChangeLog.html#%E7%89%88%E6%9C%AC-2026-06-30",
     "first_seen": "2026-06-30",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://longcat.chat/platform"
   },
   {
@@ -2456,7 +2539,7 @@
     "region": "国内",
     "external_id": "https://longcat.chat/platform/docs/zh/ChangeLog.html#%E7%89%88%E6%9C%AC-2026-05-29",
     "first_seen": "2026-05-29",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://longcat.chat/platform"
   },
   {
@@ -2502,7 +2585,7 @@
     "region": "国内",
     "external_id": "https://cloud.tencent.com/document/product/1729/97765#t2026-06-22-0",
     "first_seen": "2026-06-22",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://console.cloud.tencent.com/hunyuan"
   },
   {
@@ -2518,7 +2601,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-17-stepfun",
     "first_seen": "2026-11-17",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "expires_on": "2026-11-17"
   },
   {
@@ -2547,7 +2630,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-02-aliyun_qwen",
     "first_seen": "2026-11-02",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://bailian.console.aliyun.com"
   },
   {
@@ -2563,7 +2646,7 @@
     "region": "国内",
     "external_id": "changelog-2026-10-30-aliyun_qwen",
     "first_seen": "2026-10-30",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://bailian.console.aliyun.com"
   },
   {
@@ -2579,7 +2662,7 @@
     "region": "国内",
     "external_id": "changelog-2026-11-16-aliyun_qwen",
     "first_seen": "2026-11-16",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://bailian.console.aliyun.com"
   },
   {
@@ -2608,7 +2691,7 @@
     "region": "国内",
     "external_id": "doc:https://help.aliyun.com/zh/model-studio/new-free-quota",
     "first_seen": "2026-11-05",
-    "last_seen": "2026-11-19",
+    "last_seen": "2026-11-20",
     "claim_url": "https://bailian.console.aliyun.com"
   },
   {
